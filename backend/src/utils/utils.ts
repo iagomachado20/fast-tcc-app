@@ -1,4 +1,3 @@
-
 class UtilClass {
 
     static normalizePort(val): number | boolean  {
@@ -15,7 +14,6 @@ class UtilClass {
 
         return false;
     }
-
 };
 
 module.exports = UtilClass;
