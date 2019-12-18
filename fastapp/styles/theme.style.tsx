@@ -9,7 +9,7 @@ export default {
     },
     LIGHT_BACKGROUND_COLOR: '#e8eaf6',
     SECONDARY_COLOR: 'rgb(238, 167, 2)',
-    COLOR_FONT_LIGHT: '#ffffff',
+    COLOR_FONT_LIGHT: 'rgb(255, 255, 255)',
     FONT_WEIGHT_LIGHT: 200,
     FONT_WEIGHT_MEDIUM: 600,
     FONT_WEIGHT_HEAVY: 800
