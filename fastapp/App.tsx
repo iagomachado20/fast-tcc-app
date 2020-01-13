@@ -1,18 +1,12 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import React, { Component } from 'react';
+import React from 'react';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { AppLoading } from 'expo';
+import { Root } from 'native-base';
 
-// Pages
-import { HomeScreen } from './pages/login';
+import NavigationRoutes from './app/config/routes/routes';
 
-const MainNavigator = createStackNavigator({
-  Home: { screen: HomeScreen }
-});
-
-const App = createAppContainer(MainNavigator);
+const App = NavigationRoutes;
 
 class MainNavigation extends React.Component<any, any> {
 
@@ -34,11 +28,16 @@ class MainNavigation extends React.Component<any, any> {
 
 
   render() {
+
     if (!this.state.isReady) {
       return <AppLoading/>;
     }
 
-    return <App></App>;
+    return (
+      <Root>
+        <App></App>
+      </Root>
+    );
   }
 
 

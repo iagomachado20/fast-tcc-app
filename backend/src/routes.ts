@@ -1,13 +1,13 @@
-const exp = require('express');
-const routes = exp.Router();
-let jwt = require('jsonwebtoken');
-let middleware = require('./middleware/auth.middleware');
+const exp = require('express')
+const routes = exp.Router()
+const jwt = require('jsonwebtoken')
+const middleware = require('./middleware/auth.middleware')
 
-const UserController = require('./controllers/UserController');
+const UserController = require('./controllers/UserController')
 
 // Users Route
-routes.post('/login', UserController.login);
-routes.post('/users', UserController.insert);
-routes.get('/me', middleware.checkToken, UserController.dataUserLogged);
+routes.post('/login', UserController.login)
+routes.post('/register', UserController.insert)
+routes.get('/me', middleware.checkToken, UserController.dataUserLogged)
 
-module.exports = routes;
+module.exports = routes
