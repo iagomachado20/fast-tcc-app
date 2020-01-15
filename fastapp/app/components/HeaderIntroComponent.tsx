@@ -14,7 +14,8 @@ const HeaderIntroComponent = (props: { title: string, description: string }) => 
         <View styles={ { flex: 1, alignItems: 'center', justifyContent: 'center' } }>
             <LogoComponent></LogoComponent>
             <Title>{ props.title}</Title>
-            <Description>{ props.description}</Description>
+            { props.description && 
+                <Description>{ props.description}</Description> }
         </View>
     );
 };

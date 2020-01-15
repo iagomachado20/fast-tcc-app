@@ -4,6 +4,13 @@ require('dotenv-safe/config')
 const checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers.authorization
 
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: 'Token precisa ser fornecido'
+    })
+  }
+
   if (token.startsWith('Bearer ')) {
     token = token.slice(7, token.length)
   }
