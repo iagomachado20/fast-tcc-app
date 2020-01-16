@@ -1,7 +1,10 @@
+import { User as enumUser } from '../enum/user'
 const User = require('../models/User')
 const authService = require('../services/auth.service')
 const AuthService = new authService()
 const jwt = require('jsonwebtoken')
+
+const ObjectId = require('mongodb').ObjectID
 
 module.exports = {
 
@@ -104,6 +107,49 @@ module.exports = {
         success: false
       })
     }
+  },
+
+  async favoriteEstablishmentToggle (req, res) {
+    const { favoriteId } = req.body
+    const { userId } = req
+
+    User.findById({ _id: userId }, function (err = null, user) {
+      const fav = user.favorites.id(favoriteId)
+
+      if (fav) {
+        fav.remove()
+      } else {
+        user.favorites.push({ _id: favoriteId })
+      }
+
+      user.save(function (err) {
+        if (err) return res.status(400).send({ type: 'error', message: 'Não foi possível favoritar' })
+        return res.json(user)
+      })
+    })
+  },
+
+  async listFavoritesEstablishments (req, res) {
+    const { userId } = req
+
+    User.findById({ _id: userId }, function (err = null, user) {
+      const favoritesId = user.favorites.map(favorite => {
+        return ObjectId(favorite._id)
+      })
+
+      User.find({
+        _id: {
+          $in: [favoritesId]
+        }
+      }, function (error = null, favorites) {
+        if (error) return res.status(400).send(error)
+
+        res.send({
+          data: favorites,
+          type: 'success'
+        })
+      })
+    })
   }
 
 }

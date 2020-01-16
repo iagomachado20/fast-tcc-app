@@ -1,11 +1,14 @@
 import { User } from '../enum/user'
 
 const mongo = require('mongoose')
-const Schema = mongo.Schema
+
+const favoritesSchema = new mongo.Schema({
+  userId: { type: mongo.Schema.Types.ObjectId, ref: 'users' }
+})
 
 const schemaUser = new mongo.Schema({
   nome: String,
-  email: String,
+  email: { type: String, unique: true },
   telefone: { type: String, default: '' },
   foto: { type: Buffer, default: '' },
   ativo: { type: Boolean, default: true },
@@ -21,7 +24,8 @@ const schemaUser = new mongo.Schema({
   password: { type: String, default: '' },
   vagas: { type: Number, default: 0 },
   rating: { type: Number, default: 0 },
-  dataCriacao: { type: Date, default: Date.now }
+  dataCriacao: { type: Date, default: Date.now },
+  favorites: [favoritesSchema]
 })
 
 module.exports = mongo.model('User', schemaUser)
