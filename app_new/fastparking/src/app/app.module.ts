@@ -9,6 +9,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedComponentsModule } from './components/shared.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { LoginPageModule } from './screens/login/login.module';
+import { LoginPage } from './screens/login/login.page';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +21,10 @@ import { SharedComponentsModule } from './components/shared.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    ReactiveFormsModule,
+    LoginPageModule,
+    CommonModule,
+    FormsModule,
     SharedComponentsModule
   ],
   providers: [

@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true">
+<ion-content>
 
   <div id="container">
     <header class="heading">
@@ -6,17 +6,20 @@
       <h1>FastParking</h1>
       <p>Encontre vagas para estacionar de onde é que você esteja</p>
     </header>
-    <form class="form">
+    <form class="form" [formGroup]="formLogin">
       <ion-item color="transparent">
         <ion-label color="light" position="floating">E-mail</ion-label>
-        <ion-input color="light"></ion-input>
+        <ion-input type="text" name="email" formControlName="email"></ion-input>
       </ion-item>
       <ion-item color="transparent">
         <ion-label color="light" position="floating">Senha</ion-label>
-        <ion-input color="light"></ion-input>
+        <ion-input type="password" name="password" formControlName="password" color="light"></ion-input>
       </ion-item>
-      <ion-button color="light" shape="round" expand="full">Entrar</ion-button>
+      <ion-button color="light" (click)="requestLogin()" [disabled]="formLogin.invalid" shape="round" expand="full">Entrar</ion-button>
     </form>
-    
+    <p class="footer">
+      Não possui uma conta? 
+      <ion-button color="secondary" fill="clear">Cadastre-se agora</ion-button>
+    </p>
   </div>
 </ion-content>
