@@ -1,0 +1,29 @@
+<ion-content>
+
+  <div id="container">
+    <header class="heading">
+      <img src="assets/logo.png" class="logo">
+      <h1>Cadastro</h1>
+      <p>{{ selectedProfileType ? 'Preencha seus dados' : 'Selecione o seu tipo de perfil' }}</p>
+    </header>
+    <div class="container-main">
+      <div class="container-options block" [ngClass]="{'active': !showForm}">
+        <button class="option-list" *ngFor="let option of typesUser" (click)="setProfileRegister(option.type)">
+          <img [src]="option.icon" [alt]="option.title" class="ico">
+          <div class="text">
+            <h4>{{ option.title }}</h4>
+            <p>{{ option.description }}</p>
+          </div>
+        </button>
+      </div>
+      <!-- FORM -->
+      <div class="block"  [ngClass]="{'active': showForm}">
+        <p>form</p>
+      </div>
+    </div>
+    <p class="footer">
+      Não possui uma conta? 
+      <ion-button color="secondary" [routerLink]="['/']" fill="clear">Voltar para Login</ion-button>
+    </p>
+  </div>
+</ion-content>
