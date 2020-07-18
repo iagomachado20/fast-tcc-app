@@ -18,12 +18,85 @@
       </div>
       <!-- FORM -->
       <div class="block"  [ngClass]="{'active': showForm}">
-        <p>form</p>
+
+
+        <form [formGroup]="form"  *ngIf="selectedProfileType === userType.Client">
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Nome</ion-label>
+            <ion-input type="text" name="nome" formControlName="nome"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">E-mail</ion-label>
+            <ion-input type="text" inputmode="email" name="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Telefone</ion-label>
+            <ion-input type="text" inputmode="tel" name="telefone" formControlName="telefone"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Placa Veículo</ion-label>
+            <ion-input type="text" name="placaVeiculo" formControlName="placaVeiculo"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Marca Veículo</ion-label>
+            <ion-input type="text" name="marcaVeiculo" formControlName="marcaVeiculo"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Senha</ion-label>
+            <ion-input type="password" name="password" formControlName="password" color="light"></ion-input>
+          </ion-item>
+        </form>
+
+        <form [formGroup]="form" *ngIf="selectedProfileType === userType.Establishment">
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Nome</ion-label>
+            <ion-input type="text" name="nome" formControlName="nome"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">E-mail</ion-label>
+            <ion-input type="text" inputmode="email" name="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Telefone</ion-label>
+            <ion-input type="text" inputmode="tel" name="telefone" formControlName="telefone"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Endereço</ion-label>
+            <ion-input type="text" name="endereco" formControlName="endereco"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Número</ion-label>
+            <ion-input type="number" name="numero" formControlName="numero"></ion-input>
+          </ion-item>
+          <label class="description">Valor Hora</label>
+          <ion-item color="transparent">
+            <ion-range min="0" max="100" step="5" pin="true" formControlName="valorhora" name="valorhora" color="light" snaps="false">
+              <ion-label slot="start" color="light">0</ion-label>
+              <ion-label slot="end">100</ion-label>
+            </ion-range>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Horário de Funcionamento</ion-label>
+            <ion-input type="text" name="horarioFuncionamento" formControlName="horarioFuncionamento"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Observação</ion-label>
+            <ion-input type="text" name="observacao" formControlName="observacao"></ion-input>
+          </ion-item>
+          <ion-item color="transparent">
+            <ion-label color="light" position="floating">Senha</ion-label>
+            <ion-input type="password" name="password" formControlName="password" color="light"></ion-input>
+          </ion-item>
+        </form>
+        <ion-button color="light" 
+          [disabled]="showForm && form.invalid" 
+          (click)="register()" 
+          shape="round" 
+          expand="full">Criar Conta</ion-button>
       </div>
     </div>
-    <p class="footer">
-      Não possui uma conta? 
-      <ion-button color="secondary" [routerLink]="['/']" fill="clear">Voltar para Login</ion-button>
-    </p>
+    <footer class="footer">
+      <ion-button color="secondary" fill="clear" (click)="resetCycle()">Voltar para Login</ion-button>
+    </footer>
   </div>
 </ion-content>

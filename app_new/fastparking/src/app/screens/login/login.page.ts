@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import { LoginCredentials, AuthServiceProvider } from 'src/app/services/auth.service';
-import { ErrorRequest } from 'src/app/models/errors.model';
+import { ErrorRequest, PayloadLogin } from 'src/app/models/errors.model';
 
 @Component({
   selector: 'app-login',
@@ -33,10 +33,12 @@ export class LoginPage {
     const credentials: LoginCredentials = this.formLogin.value;
 
     this.auth.requestLogin(credentials)
-    .subscribe(response => {
+    .subscribe((response: PayloadLogin) => {
 
-      console.log(response);
+      this.util.showToast(response.message);
       this.util.hideLoading();
+
+      this.auth.saveSessionUser(response);
 
     }, (error: ErrorRequest) => {
 

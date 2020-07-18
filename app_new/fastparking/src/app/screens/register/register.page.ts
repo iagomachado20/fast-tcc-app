@@ -1,8 +1,10 @@
-import { Component, Type, OnInit } from '@angular/core';
+import { ErrorRequest, SuccessRequest } from './../../models/errors.model';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthServiceProvider } from 'src/app/services/auth.service';
 import { TypeUser } from 'src/app/models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +13,8 @@ import { TypeUser } from 'src/app/models/user.model';
 })
 export class RegisterPage implements OnInit{
 
-  formClient: FormGroup;
+  userType = TypeUser;
+  form: FormGroup;
   formEstablishment: FormGroup;
   selectedProfileType: TypeUser;
   showForm = false;
@@ -33,42 +36,89 @@ export class RegisterPage implements OnInit{
   constructor(
     public fb: FormBuilder,
     private util: UtilService,
-    private auth: AuthServiceProvider
+    private auth: AuthServiceProvider,
+    private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
 
-    //Form Client
-    this.formClient = this.fb.group({
+  setProfileRegister(type: TypeUser): void {
+    this.form = this.setFormByUser(type);
+    this.selectedProfileType = type;
+    this.showForm = true;
+
+  }
+
+  private navigate() {
+
+    this.router.navigate(['/']);
+
+  }
+
+  private setFormByUser(type: TypeUser): FormGroup {
+
+    if (type === TypeUser.Establishment) {
+
+      return this.fb.group({
+        nome: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.email]],
+        numero: [0, [ Validators.required ]],
+        valorhora: [0, [ Validators.required ]],
+        endereco: ['', Validators.required],
+        localizacao: [[-100, -100], Validators.required],
+        horarioFuncionamento: ['', Validators.required],
+        perfil: TypeUser.Establishment,
+        observacao: ['', [Validators.required]],
+        telefone: ['', [Validators.required]],
+        password: ['', [Validators.required]]
+      });
+
+    }
+
+    return this.fb.group({
       nome: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       placaVeiculo: ['', [ Validators.required ]],
       marcaVeiculo: ['', [ Validators.required ]],
       perfil: TypeUser.Client,
+      telefone: ['', [Validators.required]],
       password: ['', [Validators.required]]
-
-    });
-    
-    //Form Client
-    this.formEstablishment = this.fb.group({
-      nome: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      numero: [0, [ Validators.required ]],
-      valorhora: [0, [ Validators.required ]],
-      endereco: ['', Validators.required],
-      localizacao: [[-100, -100], Validators.required],
-      horarioFuncionamento: ['', Validators.required],
-      perfil: TypeUser.Establishment,
-      observacao: ['', [Validators.required]],
-      password: ['', [Validators.required]]
-
     });
 
   }
 
-  setProfileRegister(type: TypeUser): void {
-    this.selectedProfileType = type;
-    this.showForm = true;
+  resetCycle() {
+    this.showForm = false;
+    this.selectedProfileType = null;
+    this.form = null;
+
+    this.navigate();
+
+  }
+
+  register() {
+
+    if (this.form.invalid) { return false; }
+
+    const { value } = this.form;
+
+    this.util.showLoading();
+
+    this.auth.registerUser(value)
+    .subscribe((response: SuccessRequest) => {
+
+      this.util.hideLoading();
+      this.util.showToast(response.message);
+
+      this.navigate();
+
+    }, (error: ErrorRequest) => {
+
+      this.util.hideLoading();
+      this.util.showToast(error.error.message);
+
+    });
+
   }
 
 }
