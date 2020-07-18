@@ -13,6 +13,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginPageModule } from './screens/login/login.module';
 import { LoginPage } from './screens/login/login.page';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpInterceptorService } from './interceptors/http-interceptos.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +32,12 @@ import { LoginPage } from './screens/login/login.page';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
