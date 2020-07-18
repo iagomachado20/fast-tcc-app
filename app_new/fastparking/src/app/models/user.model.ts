@@ -23,5 +23,5 @@ export interface User {
 }
 
 export interface Establishment extends User {
-
+  distance: string;
 }

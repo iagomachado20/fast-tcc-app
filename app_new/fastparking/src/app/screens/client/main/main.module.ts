@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -25,6 +26,9 @@ import { SharedComponentsModule } from 'src/app/components/shared.module';
   exports: [],
   declarations: [
     MainPage
+  ],
+  providers: [
+    Geolocation
   ]
 })
 export class MainPageModule {}

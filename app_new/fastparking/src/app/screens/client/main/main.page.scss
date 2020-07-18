@@ -43,6 +43,7 @@ ion-progress-bar {
     border-radius: 7px;
     width: 95%;
     margin: -6px auto;
+    background: #ffffff;
   }
 }
 
@@ -98,6 +99,7 @@ ion-card {
     ion-card-subtitle {
       color: var(--ion-color-secondary);
       margin: 5px 0;
+      font-size: 18px;
     }
   }
 }

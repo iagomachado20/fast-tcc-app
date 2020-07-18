@@ -17,6 +17,8 @@ import {
   MarkerIcon
 } from '@ionic-native/google-maps';
 
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
@@ -25,18 +27,50 @@ import {
 export class MainPage implements OnInit {
 
   map: GoogleMap;
-
+  positionUser: Coordinates;
   isLoading = true;
-  searchValue = '';
   establishments: Establishment[] = [];
+  filteredItems: Establishment[] = [];
+  isFiltered = false;
 
   constructor(
     private util: UtilService,
     private auth: AuthServiceProvider,
     private establishmentService: EstablishmentService,
-    private platform: Platform
-  ) {}
+    private platform: Platform,
+    private geolocation: Geolocation
+  ) {
 
+    this.getPositionUser().then(position => {
+      this.positionUser = position.coords;
+    });
+
+  }
+
+  assignCopy(){
+    this.filteredItems = Object.assign([], this.establishments);
+  }
+
+  search(event) {
+
+    const { value } = event.detail;
+
+    if  (!value){
+      this.assignCopy();
+    } // when nothing has typed
+    this.filteredItems = Object.assign([], this.establishments).filter(
+      item => item.nome.toLowerCase().indexOf(value.toLowerCase()) > -1
+    )
+
+    this.isFiltered = this.filteredItems.length > 0;
+
+  }
+
+  getPositionUser() {
+
+    return this.geolocation.getCurrentPosition();
+
+  }
 
   loadMap() {
 
@@ -46,27 +80,32 @@ export class MainPage implements OnInit {
       API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyBcC6qdfjNWpxeaC6zvSQ4ZBnRz5IsT0AI'
     });
 
-    const mapOptions: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: 43.0741904,
-          lng: -89.3809802
-        },
-        zoom: 18,
-        tilt: 30
-      }
-    };
+    this.getPositionUser().then(position => {
 
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
+      const { latitude, longitude } = position.coords;
+
+      const mapOptions: GoogleMapOptions = {
+        camera: {
+          target: {
+            lat: latitude,
+            lng: longitude
+          },
+          zoom: 14,
+          tilt: 10
+        }
+      };
+  
+      this.map = GoogleMaps.create('map_canvas', mapOptions);
+
+    });
+
 
 
   }
 
   changeStateLoading() {
 
-    setTimeout(() => {
-      this.isLoading = !this.isLoading;
-    }, 2000);
+    setTimeout(() => this.isLoading = !this.isLoading, 2000);
 
   }
 
@@ -96,7 +135,17 @@ export class MainPage implements OnInit {
 
       this.auth.userLogged = dataUser.data;
 
-      this.createMarker(dataUser.data, null, true);
+      this.getPositionUser().then(position => {
+
+        const { latitude, longitude } = position.coords; 
+
+        this.createMarker(dataUser.data, {
+          lat: latitude,
+          lng: longitude
+        }, true);
+
+      });
+
 
     });
 
@@ -114,8 +163,9 @@ export class MainPage implements OnInit {
     .subscribe((establishments: { success: boolean, data: Establishment[] }) => {
 
       this.establishments = establishments.data;
+      this.assignCopy();
 
-      this.establishments.forEach(establishment => {
+      this.establishments = this.establishments.map(establishment => {
 
         const position = {
           lat: Number(establishment.localizacao[0]),
@@ -123,6 +173,10 @@ export class MainPage implements OnInit {
         };
 
         this.createMarker(establishment, position, false);
+
+        establishment.distance = this.establishmentService.calculateDistancePointUser(this.positionUser, position);
+
+        return establishment;
 
       }); 
 
@@ -134,6 +188,12 @@ export class MainPage implements OnInit {
       this.changeStateLoading();
 
     });
+
+  }
+
+  selectEstablishment(establishment: Establishment) {
+
+    this.isFiltered = false;
 
   }
 

@@ -11,6 +11,10 @@ export class UtilService {
     private toastController: ToastController
   ) {}
 
+  static deg2rad(deg) {
+    return deg * (Math.PI / 180);
+  }
+
   async showLoading() {
 
     const loading = await this.loadingController.create({
