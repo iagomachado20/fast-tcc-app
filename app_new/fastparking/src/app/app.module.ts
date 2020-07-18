@@ -12,9 +12,9 @@ import { SharedComponentsModule } from './components/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginPageModule } from './screens/login/login.module';
-import { LoginPage } from './screens/login/login.page';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptos.service';
+import { MainPageModule } from './screens/client/main/main.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +25,7 @@ import { HttpInterceptorService } from './interceptors/http-interceptos.service'
     AppRoutingModule,
     ReactiveFormsModule,
     LoginPageModule,
+    MainPageModule,
     CommonModule,
     FormsModule,
     SharedComponentsModule
