@@ -9,7 +9,7 @@ export interface User {
   endereco: string;
   foto: string;
   horarioFuncionamento: string;
-  localizacao: [];
+  localizacao: any;
   marcaVeiculo: string;
   nome: string;
   numero: number;
@@ -20,4 +20,8 @@ export interface User {
   telefone: string;
   vagas: number;
   valorhora: number;
+}
+
+export interface Establishment extends User {
+
 }

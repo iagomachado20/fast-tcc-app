@@ -41,6 +41,12 @@ export class AuthServiceProvider {
 
   }
 
+  getMeProfile() {
+
+    return this.http.get(`${environment.baseApi}/me`);
+
+  }
+
   saveSessionUser(data: PayloadLogin) {
 
     this.tokenAuth = data.token;
