@@ -1,0 +1,38 @@
+<div class="card-modal">
+  <h2 class="title">
+    <p>{{ data.nome }}
+      <strong>{{ data.distance }} Km</strong>
+    </p> 
+    <ion-badge [color]="data.ativo ? 'success' : 'medium'">{{ data.ativo ? 'Aberto' : 'Fechado' }}</ion-badge>
+  </h2>
+  
+  <address *ngIf="data.endereco && data.numero">
+    <ion-icon name="location-outline"></ion-icon> {{ data.endereco }}, {{ data.numero }}
+  </address>
+
+  <div class="buttons">
+    <ion-button size="small" fill="clear" color="medium">
+      <ion-icon slot="icon-only" name="call"></ion-icon>
+    </ion-button>
+    <ion-button size="small" fill="clear" color="medium">
+      <ion-icon slot="icon-only" name="mail"></ion-icon>
+    </ion-button>
+    <ion-button size="small" fill="clear" color="medium">
+      <ion-icon slot="icon-only" name="logo-whatsapp"></ion-icon>
+    </ion-button>
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Check-In</ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [value]="dateNow"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Check-Out</ion-label>
+    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [value]="dateNow"></ion-datetime>
+  </ion-item>
+  <ion-item  class="payment">
+    <ion-label position="floating">Valor a pagar:</ion-label>
+    <h1 class="value-payment">{{ valuePayment | currency: 'R$' }}</h1>
+  </ion-item>
+  <ion-button shape="round" expand="full">Solicitar Vaga</ion-button>
+</div>

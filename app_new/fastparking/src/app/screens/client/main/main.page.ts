@@ -1,4 +1,4 @@
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
 import { Establishment, User } from './../../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
@@ -18,6 +18,7 @@ import {
 } from '@ionic-native/google-maps';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ModalCallPage } from '../modal-call/modal-call.page';
 
 @Component({
   selector: 'app-main',
@@ -38,7 +39,8 @@ export class MainPage implements OnInit {
     private auth: AuthServiceProvider,
     private establishmentService: EstablishmentService,
     private platform: Platform,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private modal: ModalController
   ) {
 
     this.getPositionUser().then(position => {
@@ -191,9 +193,23 @@ export class MainPage implements OnInit {
 
   }
 
-  selectEstablishment(establishment: Establishment) {
+  async selectEstablishment(establishment: Establishment) {
 
     this.isFiltered = false;
+
+    const modal = await this.modal.create({
+      component: ModalCallPage,
+      cssClass: 'modal-background',
+      swipeToClose: true,
+      backdropDismiss: true,
+      animated: true,
+      showBackdrop: true,
+      componentProps: {
+        data: establishment
+      }
+    });
+
+    await modal.present();
 
   }
 

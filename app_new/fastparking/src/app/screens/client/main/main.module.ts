@@ -1,3 +1,4 @@
+import { ModalCallPage } from './../modal-call/modal-call.page';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { NgModule } from '@angular/core';
@@ -25,7 +26,8 @@ import { SharedComponentsModule } from 'src/app/components/shared.module';
   ],
   exports: [],
   declarations: [
-    MainPage
+    MainPage,
+    ModalCallPage
   ],
   providers: [
     Geolocation
