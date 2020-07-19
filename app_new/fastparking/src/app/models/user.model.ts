@@ -4,6 +4,7 @@ export enum TypeUser {
 }
 
 export interface User {
+  _id: string;
   ativo: boolean;
   email: string;
   endereco: string;

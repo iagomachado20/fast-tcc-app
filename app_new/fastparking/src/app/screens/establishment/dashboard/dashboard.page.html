@@ -7,25 +7,25 @@
       refreshingText="Atualizando...">
     </ion-refresher-content>
   </ion-refresher>
-  <div id="container">
+  <div id="container" *ngIf="user">
     <header class="heading">
-      <img src="assets/icon.png" class="avatar" alt="">
+      <img [src]="user.foto" [ngClass]="{'gray': !user.ativo}" class="avatar" alt="">
       <div class="text">
-        <h4 class="title">Garagem Vila Park</h4>
-        <p class="sub">email@email.com.br</p>
+        <h4 class="title">{{ user.nome }}</h4>
+        <p class="sub">{{ user.email }}</p>
         <ion-item color="transparent" lines="none">
-          <ion-label position="stacked">Aberto</ion-label>
-          <ion-toggle color="secondary" [(ngModel)]="pepperoni"></ion-toggle>
+          <ion-label position="stacked">{{ user.ativo ? 'Aberto' : 'Fechado' }}</ion-label>
+          <ion-toggle color="secondary" (ionChange)="changeStatus(user.ativo)" [(ngModel)]="user.ativo"></ion-toggle>
         </ion-item>
       </div>
     </header>
     <div class="container-cards" (click)="openDialog()">
       <ion-card color="secondary">
-        <h1 class="title">5</h1>
+        <h1 class="title">{{ vacancies.vacanciesAvailables }}</h1>
         <p>Vagas Disponíveis</p>
       </ion-card>
       <ion-card color="warning">
-        <h1 class="title">30</h1>
+        <h1 class="title">{{ vacancies.vacanciesBusy }}</h1>
         <p>Vagas Ocupadas</p>
       </ion-card>
     </div>

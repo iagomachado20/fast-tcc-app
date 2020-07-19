@@ -1,3 +1,4 @@
+import { Establishment } from 'src/app/models/user.model';
 import { PayloadLogin } from 'src/app/models/errors.model';
 import { environment } from './../../environments/environment.prod';
 import { Injectable } from '@angular/core';
@@ -45,7 +46,7 @@ export class AuthServiceProvider {
 
   getMeProfile() {
 
-    return this.http.get(`${environment.baseApi}/me`);
+    return this.http.get<{data: User; success: boolean}>(`${environment.baseApi}/me`);
 
   }
 

@@ -24,6 +24,7 @@
         <ion-card button="true" *ngFor="let establishment of establishments" (click)="selectEstablishment(establishment)">
           <img [src]="establishment.foto" class="background">
           <ion-card-content>
+            <ion-badge>{{ establishment.valorhora | currency: 'R$' }}/ h</ion-badge>
             <ion-card-title>{{ establishment.nome }}</ion-card-title>
             <ion-card-subtitle *ngIf="establishment.distance">
               <ion-icon name="location-outline"></ion-icon> {{ establishment.distance }} KM

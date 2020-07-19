@@ -39,7 +39,7 @@
     <h1 class="value-payment">{{ valuePayment | currency: 'R$' }}</h1>
   </ion-item>
   <ion-button 
-    [disabled]="valuePayment === 0"
+    [disabled]="valuePayment === 0 || !data.ativo"
     shape="round"
     (click)="requestVacancy()" 
     expand="full">Solicitar Vaga</ion-button>

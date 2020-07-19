@@ -1,7 +1,9 @@
+import { environment } from './../../environments/environment.prod';
 import { Establishment } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { ModelRequstVacancy } from '../models/vacancy.model';
 
 export interface VacancyScheduled {
   establishment: Establishment;
@@ -21,5 +23,33 @@ export class VacancyService {
     private http: HttpClient
   ) {}
 
+  updateActivityEstablishment(status: boolean) {
+
+    const body = {
+      ativo: status
+    };
+
+    return this.http.put(`${environment.baseApi}/flag-establishments`, body);
+  }  
+
+  getCounterVacancys() {
+    return this.http.get(`${environment.baseApi}/counters-vacancy`);
+  }
+
+  getListVacanciesBusy() {
+    return this.http.get(`${environment.baseApi}/list-vacancies-busy`);
+  }
+
+  updateStatusVacancy() {
+    return this.http.get(`${environment.baseApi}/update-status-vacancy`);
+  }
+
+  requestVacancy(requestData: ModelRequstVacancy) {
+    return this.http.post(`${environment.baseApi}/request-vacancy`, requestData);
+  }
+
+  cancelVacancy() {
+    return this.http.get(`${environment.baseApi}/canceled-vacancy`)
+  }
 
 }

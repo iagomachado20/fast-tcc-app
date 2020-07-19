@@ -3,6 +3,7 @@ import { Establishment } from 'src/app/models/user.model';
 import { UtilService } from 'src/app/services/util.service';
 import { ModalController } from '@ionic/angular';
 import { VacancyService } from 'src/app/services/vacancy.service';
+import { ModelRequstVacancy, VacancyStatus } from 'src/app/models/vacancy.model';
 
 @Component({
   selector: 'app-modal-call',
@@ -43,16 +44,39 @@ export class ModalCallPage implements OnInit {
 
   requestVacancy() {
 
-    // this.util.showToast('Solicitando Vaga...');
+    this.util.showToast('Solicitando Vaga...');
 
-    // this.util.showLoading();
-    this.close();
+    this.util.showLoading('Solicitando...');
 
-    this.vacancyService.dispatchVacancyConfirmed.next({
-      establishment: this.data,
-      valuePayment: this.valuePayment,
-      dataCheckIn: this.dateCheckIn,
-      dataCheckout: this.dateCheckout
+    const dataRequestVacancy: ModelRequstVacancy = {
+      status: VacancyStatus.Scheduled,
+      valor: this.valuePayment,
+      establishment: this.data._id,
+      checkIn: this.dateCheckIn,
+      checkOut: this.dateCheckout
+    }; 
+
+    this.vacancyService.requestVacancy(dataRequestVacancy)
+    .subscribe(response => {
+
+      console.log(response);
+
+      this.close();
+      this.util.hideLoading();
+
+      this.vacancyService.dispatchVacancyConfirmed.next({
+        establishment: this.data,
+        valuePayment: this.valuePayment,
+        dataCheckIn: this.dateCheckIn,
+        dataCheckout: this.dateCheckout
+      });
+
+    }, error => {
+
+      this.close();
+      this.util.hideLoading();
+      this.util.showToast('Não foi possível solicitar sua vaga neste momento!');
+
     });
 
   }

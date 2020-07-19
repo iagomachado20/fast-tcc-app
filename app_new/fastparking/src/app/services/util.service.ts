@@ -21,11 +21,11 @@ export class UtilService {
     return Math.abs(Math.round(diff));
   }
 
-  async showLoading() {
+  async showLoading(message = 'Carregando...') {
 
     const loading = await this.loadingController.create({
       spinner: 'circles',
-      message: 'Carregando...',
+      message: message,
       translucent: true,
       backdropDismiss: false
     });
