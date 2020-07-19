@@ -3,6 +3,7 @@ import { environment } from './../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
+import { Subject } from 'rxjs';
 
 export interface LoginCredentials {
   email: string;
@@ -15,6 +16,7 @@ export interface LoginCredentials {
 export class AuthServiceProvider {
 
   public userLogged: User;
+  public setUserLogged = new Subject<User>();
   get tokenAuth () {
 
     return localStorage.getItem('token');
@@ -58,7 +60,7 @@ export class AuthServiceProvider {
 
     this.tokenAuth = null;
     this.userLogged = null;
-    sessionStorage.clear();
+    localStorage.clear();
 
   }
 

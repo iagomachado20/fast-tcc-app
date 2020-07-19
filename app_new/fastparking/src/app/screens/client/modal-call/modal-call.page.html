@@ -1,15 +1,19 @@
 <div class="card-modal">
+  <ion-button class="button-close" fill="clear" color="transparent" (click)="close()">
+    <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+  </ion-button>
   <h2 class="title">
-    <p>{{ data.nome }}
-      <strong>{{ data.distance }} Km</strong>
-    </p> 
-    <ion-badge [color]="data.ativo ? 'success' : 'medium'">{{ data.ativo ? 'Aberto' : 'Fechado' }}</ion-badge>
+    {{ data.nome }}
+    <strong>{{ data.distance }} Km</strong> 
   </h2>
-  
+  <div>
+    <ion-badge [color]="data.ativo ? 'success' : 'medium'">{{ data.ativo ? 'Aberto' : 'Fechado' }}</ion-badge>
+    <ion-badge [color]="'primary'">{{ data.valorhora | currency}} / h</ion-badge>
+  </div>
   <address *ngIf="data.endereco && data.numero">
     <ion-icon name="location-outline"></ion-icon> {{ data.endereco }}, {{ data.numero }}
   </address>
-
+  <p *ngIf="data.observacao"><ion-icon name="warning"></ion-icon> {{ data.observacao }}</p>
   <div class="buttons">
     <ion-button size="small" fill="clear" color="medium">
       <ion-icon slot="icon-only" name="call"></ion-icon>
@@ -24,15 +28,19 @@
 
   <ion-item>
     <ion-label position="floating">Check-In</ion-label>
-    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [value]="dateNow"></ion-datetime>
+    <ion-datetime [(ngModel)]="dateCheckIn" displayFormat="DD/MM/YYYY HH:mm" [value]="dateNow"></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label position="floating">Check-Out</ion-label>
-    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [value]="dateNow"></ion-datetime>
+    <ion-datetime [(ngModel)]="dateCheckout" (ionChange)="calculatePrice()" displayFormat="DD/MM/YYYY HH:mm" [value]="dateNow"></ion-datetime>
   </ion-item>
   <ion-item  class="payment">
     <ion-label position="floating">Valor a pagar:</ion-label>
     <h1 class="value-payment">{{ valuePayment | currency: 'R$' }}</h1>
   </ion-item>
-  <ion-button shape="round" expand="full">Solicitar Vaga</ion-button>
+  <ion-button 
+    [disabled]="valuePayment === 0"
+    shape="round"
+    (click)="requestVacancy()" 
+    expand="full">Solicitar Vaga</ion-button>
 </div>

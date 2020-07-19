@@ -4,7 +4,7 @@
 
   <div id="container">
     <div class="map" id="map_canvas"></div>
-    <header class="header-search">
+    <header class="header-search" *ngIf="!vacancyScheduled">
       <ion-searchbar 
         debounce="300" 
         mode="md"
@@ -19,7 +19,7 @@
         </ion-item>
       </ion-list>
     </header>
-    <div class="carrousel-box" *ngIf="!isLoading">
+    <div class="carrousel-box" *ngIf="!isLoading && !vacancyScheduled">
       <ion-scroll scrollX="true" style="white-space: nowrap; height: 250px; display: flex">
         <ion-card button="true" *ngFor="let establishment of establishments" (click)="selectEstablishment(establishment)">
           <img [src]="establishment.foto" class="background">
@@ -32,5 +32,19 @@
         </ion-card>
       </ion-scroll>
     </div>
+  </div>
+  <div class="container-scheduled" *ngIf="vacancyScheduled">
+    <h4 class="title">Você tem uma vaga agendada!</h4>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img [src]="vacancyScheduled.establishment.foto">
+      </ion-avatar>
+      <ion-label>
+        <ion-title color="primary">{{ vacancyScheduled.establishment.nome }}</ion-title>
+        <h3><strong>Valor à pagar: </strong> {{ vacancyScheduled.valuePayment | currency: 'R$' }}</h3>
+        <p> <strong>CheckIn:</strong> {{ vacancyScheduled.dataCheckIn | date: 'dd/mm/yyyy HH:mm' }}</p>
+        <p> <strong>Checkout:</strong> {{ vacancyScheduled.dataCheckout | date: 'dd/mm/yyyy HH:mm' }}</p>
+      </ion-label>
+    </ion-item>
   </div>
 </ion-content>

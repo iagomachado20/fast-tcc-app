@@ -121,3 +121,16 @@ ion-item.selected {
 * {
   font-family: var(--ion-font-family);
 }
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 4px solid var(--ion-color-primary);
+  margin: 5px;
+}
+
+.heading {
+  padding: 30px;
+  background: linear-gradient(to right, var(--ion-color-primary), var(--ion-color-primary-tint));
+}

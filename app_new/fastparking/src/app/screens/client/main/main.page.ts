@@ -1,4 +1,5 @@
-import { Platform, ModalController } from '@ionic/angular';
+import { VacancyScheduled } from './../../../services/vacancy.service';
+import { Platform, ModalController, MenuController } from '@ionic/angular';
 import { Establishment, User } from './../../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
@@ -14,11 +15,15 @@ import {
   MarkerOptions,
   Marker,
   Environment,
-  MarkerIcon
+  MarkerIcon,
+  PolygonOptions,
+  PolylineOptions
 } from '@ionic-native/google-maps';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ModalCallPage } from '../modal-call/modal-call.page';
+import { ModelGeo } from 'src/app/models/geolocatio.model';
+import { VacancyService } from 'src/app/services/vacancy.service';
 
 @Component({
   selector: 'app-main',
@@ -33,6 +38,7 @@ export class MainPage implements OnInit {
   establishments: Establishment[] = [];
   filteredItems: Establishment[] = [];
   isFiltered = false;
+  vacancyScheduled: VacancyScheduled; 
 
   constructor(
     private util: UtilService,
@@ -40,11 +46,19 @@ export class MainPage implements OnInit {
     private establishmentService: EstablishmentService,
     private platform: Platform,
     private geolocation: Geolocation,
-    private modal: ModalController
+    private modal: ModalController,
+    private vancancyService: VacancyService
   ) {
 
     this.getPositionUser().then(position => {
       this.positionUser = position.coords;
+    });
+
+    this.vancancyService.dispatchVacancyConfirmed.subscribe((dataVacancy: VacancyScheduled) => {
+
+      this.markerDistancePointsSelected(dataVacancy.establishment, this.positionUser);
+      this.vacancyScheduled = dataVacancy;
+
     });
 
   }
@@ -62,7 +76,7 @@ export class MainPage implements OnInit {
     } // when nothing has typed
     this.filteredItems = Object.assign([], this.establishments).filter(
       item => item.nome.toLowerCase().indexOf(value.toLowerCase()) > -1
-    )
+    );
 
     this.isFiltered = this.filteredItems.length > 0;
 
@@ -82,6 +96,7 @@ export class MainPage implements OnInit {
       API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyBcC6qdfjNWpxeaC6zvSQ4ZBnRz5IsT0AI'
     });
 
+
     this.getPositionUser().then(position => {
 
       const { latitude, longitude } = position.coords;
@@ -94,10 +109,16 @@ export class MainPage implements OnInit {
           },
           zoom: 14,
           tilt: 10
+        },
+        controls: {
+          zoom: false
         }
       };
-  
+
+
+
       this.map = GoogleMaps.create('map_canvas', mapOptions);
+
 
     });
 
@@ -136,10 +157,11 @@ export class MainPage implements OnInit {
     .subscribe((dataUser: { success: boolean, data: User }) => {
 
       this.auth.userLogged = dataUser.data;
+      this.auth.setUserLogged.next(dataUser.data);
 
       this.getPositionUser().then(position => {
 
-        const { latitude, longitude } = position.coords; 
+        const { latitude, longitude } = position.coords;
 
         this.createMarker(dataUser.data, {
           lat: latitude,
@@ -161,7 +183,7 @@ export class MainPage implements OnInit {
 
     await this.loadMap();
 
-    this.establishmentService.getItems()
+    await this.establishmentService.getItems()
     .subscribe((establishments: { success: boolean, data: Establishment[] }) => {
 
       this.establishments = establishments.data;
@@ -178,9 +200,10 @@ export class MainPage implements OnInit {
 
         establishment.distance = this.establishmentService.calculateDistancePointUser(this.positionUser, position);
 
+
         return establishment;
 
-      }); 
+      });
 
       this.changeStateLoading();
 
@@ -210,6 +233,34 @@ export class MainPage implements OnInit {
     });
 
     await modal.present();
+
+  }
+
+  async markerDistancePointsSelected(establishment: Establishment, locationUser: Coordinates) {
+
+    const pointEstablishment: ModelGeo = {
+      lat: establishment.localizacao[0],
+      lng: establishment.localizacao[1]
+    };
+
+    const pointUser: ModelGeo ={
+      lat: this.positionUser.latitude,
+      lng: this.positionUser.longitude
+    };
+
+    const polylineOptions: PolylineOptions = {
+      points: [pointEstablishment, pointUser],
+      color: '#0032e9',
+      width: 8,
+      geodesic: true,
+    };
+
+    this.map.addPolyline(polylineOptions).then();
+
+    const zoomDefined = parseInt(establishment.distance, 0) < 2 ? 16 : 13; 
+
+    this.map.getCameraTarget();
+    this.map.setCameraZoom(zoomDefined);
 
   }
 

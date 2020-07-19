@@ -15,6 +15,7 @@ import { LoginPageModule } from './screens/login/login.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptos.service';
 import { MainPageModule } from './screens/client/main/main.module';
+import { DashboardModule } from './screens/establishment/dashboard/dashboard.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { MainPageModule } from './screens/client/main/main.module';
     LoginPageModule,
     MainPageModule,
     CommonModule,
+    DashboardModule,
     FormsModule,
     SharedComponentsModule
   ],

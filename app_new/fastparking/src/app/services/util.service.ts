@@ -14,6 +14,12 @@ export class UtilService {
   static deg2rad(deg) {
     return deg * (Math.PI / 180);
   }
+  static diff_hours(date2, date1) {
+    
+    let diff =(date2.getTime() - date1.getTime()) / 1000;
+    diff /= (60 * 60);
+    return Math.abs(Math.round(diff));
+  }
 
   async showLoading() {
 

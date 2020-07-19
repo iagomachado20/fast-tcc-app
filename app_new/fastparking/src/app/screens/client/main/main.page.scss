@@ -33,10 +33,18 @@ ion-progress-bar {
   padding: 0 5%;
   left: 0;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   z-index: 10;
+  ion-menu-toogle {
+    position: relative;
+    z-index: 300;
+  }
   ion-searchbar {
     font-size: 12px;
     --border-radius: 20px;
+    flex: 1;
   }
   ion-list {
     padding: 0 10px;
@@ -111,4 +119,28 @@ ion-card {
   left: 0;
   top: 0;
   z-index: 2;
+}
+
+.container-scheduled {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  left: 0;
+  padding: 15px;
+  z-index: 3;
+  background: #ffffff;
+  text-align: center;
+  border-top: 4px solid var(--ion-color-primary);
+  .title {
+    margin: 0 0 5px;
+    font-weight: bold;
+  }
+}
+
+ion-title {
+  padding: 0;
+}
+
+ion-item {
+  --border-width: 0;
 }

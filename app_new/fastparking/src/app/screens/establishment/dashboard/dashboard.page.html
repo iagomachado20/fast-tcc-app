@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      refreshingSpinner="circles"
+      closeDuration="280"
+      refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div id="container">
+    <header class="heading">
+      <img src="assets/icon.png" class="avatar" alt="">
+      <div class="text">
+        <h4 class="title">Garagem Vila Park</h4>
+        <p class="sub">email@email.com.br</p>
+        <ion-item color="transparent" lines="none">
+          <ion-label position="stacked">Aberto</ion-label>
+          <ion-toggle color="secondary" [(ngModel)]="pepperoni"></ion-toggle>
+        </ion-item>
+      </div>
+    </header>
+    <div class="container-cards" (click)="openDialog()">
+      <ion-card color="secondary">
+        <h1 class="title">5</h1>
+        <p>Vagas Disponíveis</p>
+      </ion-card>
+      <ion-card color="warning">
+        <h1 class="title">30</h1>
+        <p>Vagas Ocupadas</p>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
