@@ -11,7 +11,7 @@ import { ModalVacancies } from '../modal-vacancies/modal-vacancies.page';
 import { Establishment, User } from 'src/app/models/user.model';
 import { SuccessRequest, ErrorRequest } from 'src/app/models/errors.model';
 import { forkJoin, Subscription } from 'rxjs';
-import { CounterVacancy } from 'src/app/models/vacancy.model';
+import { CounterVacancy, UserBusy } from 'src/app/models/vacancy.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,6 +26,8 @@ export class DashboardPage implements OnInit {
     vacanciesBusy: 0
   };
 
+  listClientesBusy: UserBusy[] = [];
+
   constructor(
     private util: UtilService,
     private auth: AuthServiceProvider,
@@ -38,10 +40,14 @@ export class DashboardPage implements OnInit {
     this.sub = forkJoin([
       this.auth.getMeProfile(),
       this.vancancyService.getCounterVacancys(),
+      this.vancancyService.getListVacanciesBusy()
     ]).subscribe((response: any) => {
+
+      console.log(response)
 
       this.user = response[0].data;
       this.vacancies = response[1];
+      this.listClientesBusy = response[2].data;
 
       this.auth.setUserLogged.next(this.user);
 
@@ -70,7 +76,10 @@ export class DashboardPage implements OnInit {
       swipeToClose: true,
       backdropDismiss: true,
       animated: true,
-      showBackdrop: true
+      showBackdrop: true,
+      componentProps: {
+        list: this.listClientesBusy
+      }
     });
 
     await modal.present();
