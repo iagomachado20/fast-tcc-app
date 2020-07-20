@@ -6,18 +6,30 @@
     Vagas Ocupadas
   </h2>
   <ion-list>
-
-    <ion-item *ngFor="let user of list">
-      <ion-avatar slot="start">
-        <img [src]="user.client.foto">
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ user.client.nome }}</h2>
-        <h3>
-          <ion-icon name="car"></ion-icon> {{ user.client.marcaVeiculo + ' | ' + user.client.placaVeiculo }}
-        </h3>
-        <p>{{ 'De ' + (user.checkIn | date: 'short') + ' até ' + (user.checkOut | date: 'short') }}</p>
-      </ion-label>
-    </ion-item>
+    <ion-item-sliding *ngFor="let user of list">
+      <ion-item-options side="start">
+        <ion-item-option color="secondary" (click)="acceptAction(user)">Liberar</ion-item-option>
+      </ion-item-options>
+  
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="user.client.foto">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ user.client.nome }}</h2>
+          <h3>
+            <ion-icon name="car"></ion-icon> {{ user.client.marcaVeiculo + ' | ' + user.client.placaVeiculo }}
+          </h3>
+          <p>{{ 'De ' + (user.checkIn | date: 'short') + ' até ' + (user.checkOut | date: 'short') }}</p>
+          <ion-badge [color]="getStats(user.status).color">{{ getStats(user.status).name }}</ion-badge>
+        </ion-label>
+      </ion-item>
+  
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="unread(item)">Cancelar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    
   </ion-list>
+  
 </div>

@@ -1,3 +1,4 @@
+import { VacancyStatus } from './../../../models/vacancy.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Establishment } from 'src/app/models/user.model';
 import { UtilService } from 'src/app/services/util.service';
@@ -24,6 +25,40 @@ export class ModalVacancies implements OnInit {
 
   close() {
     this.modal.dismiss();
+  }
+
+  getStats(type: VacancyStatus) {
+
+    let status = {
+      name: '',
+      color: ''
+    };
+    
+
+    switch (type) {
+      case VacancyStatus.Busy:
+        status = {
+          name: 'Ocupado',
+          color: 'warning'
+        };
+        break;
+      case VacancyStatus.Canceled:
+        status = {
+          name: 'Cancelado',
+          color: 'danger'
+        };
+      case VacancyStatus.Scheduled:
+        status = {
+          name: 'Agendado',
+          color: 'primary'
+        };    
+      default:
+        status = status;
+        break;
+    }
+
+    return status;
+
   }
 
 }

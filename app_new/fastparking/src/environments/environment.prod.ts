@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseApi: 'http://localhost:3001'
+  baseApi: 'https://app-tcc.herokuapp.com'
 };
