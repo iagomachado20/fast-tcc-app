@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ModalController } from '@ionic/angular';
 import { VacancyService } from 'src/app/services/vacancy.service';
 import { UserBusy } from 'src/app/models/vacancy.model';
+import { SuccessRequest } from 'src/app/models/errors.model';
 
 @Component({
   selector: 'app-modal-vacancies',
@@ -13,6 +14,7 @@ import { UserBusy } from 'src/app/models/vacancy.model';
 })
 export class ModalVacancies implements OnInit {
 
+  statusVacancy = VacancyStatus;
   @Input() list: UserBusy[] = [];
 
   constructor(
@@ -38,7 +40,7 @@ export class ModalVacancies implements OnInit {
     switch (type) {
       case VacancyStatus.Busy:
         status = {
-          name: 'Ocupado',
+          name: 'Utilizando',
           color: 'warning'
         };
         break;
@@ -58,6 +60,44 @@ export class ModalVacancies implements OnInit {
     }
 
     return status;
+
+  }
+
+  acceptAction(vacancy: UserBusy) {
+
+    const payloadAction = {
+      vacancyId: vacancy._id,
+      status: VacancyStatus.Busy
+    };
+
+    if (vacancy.status === VacancyStatus.Busy) {
+      payloadAction.status = VacancyStatus.Finished;
+    } else {
+      vacancy.status = VacancyStatus.Busy;
+    }
+
+    this.vacancyService.updateStatusVacancy(payloadAction.status, payloadAction.vacancyId)
+      .subscribe((response: SuccessRequest) => {
+
+        this.util.showToast(response.message);
+
+        if (payloadAction.status === VacancyStatus.Finished) {
+          
+          this.list = this.list.filter(user => {
+            return user._id !== vacancy._id;
+          });
+
+          if (!this.list.length) {
+            this.close();
+          }
+        }
+
+
+      }, error => {
+
+        this.util.showToast('Não foi possível atualizar o status desta vaga. Tente novamente!');
+
+      });
 
   }
 

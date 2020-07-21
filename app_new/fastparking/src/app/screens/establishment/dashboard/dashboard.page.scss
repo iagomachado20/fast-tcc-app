@@ -16,8 +16,24 @@
   flex-direction: column;
   top: 50%;
   transform: translateY(-50%);
+  .block {
+    width: 100%;
+  }
 }
 
+
+ion-thumbnail {
+  --border-radius: 100%;
+  --size: 80px;
+}
+
+ion-card {
+  ion-skeleton-text {
+    width: 100vw;
+    height: 100vh;
+    margin: -15px;
+  }
+}
 
 .heading {
   margin: 3.5% 0;

@@ -28,4 +28,5 @@ export interface UserBusy {
   observacao: string;
   status: number;
   valor: 40;
+  _id: string;
 }

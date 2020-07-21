@@ -3,14 +3,14 @@ import { Establishment } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { ModelRequstVacancy } from '../models/vacancy.model';
+import { ModelRequstVacancy, VacancyStatus } from '../models/vacancy.model';
 
 export interface VacancyScheduled {
   establishment: Establishment;
   valuePayment: number;
   dataCheckIn: Date | string;
   dataCheckout: Date | string;
-};
+}
 
 @Injectable({
   providedIn: 'root'
@@ -30,18 +30,28 @@ export class VacancyService {
     };
 
     return this.http.put(`${environment.baseApi}/flag-establishments`, body);
-  }  
+  }
 
   getCounterVacancys() {
     return this.http.get(`${environment.baseApi}/counters-vacancy`);
+  }
+
+  getVacancyBusyUser() {
+    return this.http.get(`${environment.baseApi}/vacancy-userbusy`);
   }
 
   getListVacanciesBusy() {
     return this.http.get(`${environment.baseApi}/list-vacancies-busy`);
   }
 
-  updateStatusVacancy() {
-    return this.http.get(`${environment.baseApi}/update-status-vacancy`);
+  updateStatusVacancy(status: VacancyStatus, idVacancy) {
+
+    const body = {
+      id: idVacancy,
+      status
+    };
+
+    return this.http.post(`${environment.baseApi}/update-status-vacancy`, body);
   }
 
   requestVacancy(requestData: ModelRequstVacancy) {
@@ -49,7 +59,7 @@ export class VacancyService {
   }
 
   cancelVacancy() {
-    return this.http.get(`${environment.baseApi}/canceled-vacancy`)
+    return this.http.get(`${environment.baseApi}/canceled-vacancy`);
   }
 
 }

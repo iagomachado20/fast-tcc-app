@@ -34,18 +34,28 @@
       </ion-scroll>
     </div>
   </div>
-  <div class="container-scheduled" *ngIf="vacancyScheduled">
+  <div class="container-scheduled" *ngIf="vacancyScheduled" [ngClass]="{'open': vacancyScheduled}">
+    <ion-progress-bar type="indeterminate"></ion-progress-bar>
     <h4 class="title">Você tem uma vaga agendada!</h4>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img [src]="vacancyScheduled.establishment.foto">
-      </ion-avatar>
-      <ion-label>
-        <ion-title color="primary">{{ vacancyScheduled.establishment.nome }}</ion-title>
-        <h3><strong>Valor à pagar: </strong> {{ vacancyScheduled.valuePayment | currency: 'R$' }}</h3>
-        <p> <strong>CheckIn:</strong> {{ vacancyScheduled.dataCheckIn | date: 'dd/mm/yyyy HH:mm' }}</p>
-        <p> <strong>Checkout:</strong> {{ vacancyScheduled.dataCheckout | date: 'dd/mm/yyyy HH:mm' }}</p>
-      </ion-label>
-    </ion-item>
+    <div class="content">
+      <div class="info">
+        <img class="avatar" [src]="vacancyScheduled.establishment.foto">
+        <div>
+          <h4 class="title">{{ vacancyScheduled.establishment.nome }} <strong>{{ vacancyScheduled.establishment.distance }} km</strong></h4>
+          <ion-badge color="secondary">{{ vacancyScheduled.valuePayment | currency: 'R$' }}</ion-badge>
+        </div>
+      </div>
+      <div class="date">
+        <p>
+          <strong>CheckIn:</strong>
+          {{ vacancyScheduled.dataCheckIn | date: 'dd/MM/yyyy HH:mm' }}
+        </p>
+        <p>
+          <strong>Checkout:</strong>
+          {{ vacancyScheduled.dataCheckout | date: 'dd/MM/yyyy HH:mm' }}
+        </p>
+      </div>
+    </div>
+    
   </div>
 </ion-content>

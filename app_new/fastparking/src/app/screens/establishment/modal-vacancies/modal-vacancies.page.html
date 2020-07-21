@@ -8,7 +8,9 @@
   <ion-list>
     <ion-item-sliding *ngFor="let user of list">
       <ion-item-options side="start">
-        <ion-item-option color="secondary" (click)="acceptAction(user)">Liberar</ion-item-option>
+        <ion-item-option color="secondary" (click)="acceptAction(user)">
+          {{ user.status === statusVacancy.Scheduled ? 'Confirmar Vaga' : 'Liberar Vaga' }}
+        </ion-item-option>
       </ion-item-options>
   
       <ion-item>
@@ -20,8 +22,16 @@
           <h3>
             <ion-icon name="car"></ion-icon> {{ user.client.marcaVeiculo + ' | ' + user.client.placaVeiculo }}
           </h3>
-          <p>{{ 'De ' + (user.checkIn | date: 'short') + ' até ' + (user.checkOut | date: 'short') }}</p>
-          <ion-badge [color]="getStats(user.status).color">{{ getStats(user.status).name }}</ion-badge>
+          <p>{{ 'De ' + (user.checkIn | date: 'dd/MM/yyyy HH:mm') + ' até ' + (user.checkOut | date: 'dd/MM/yyyy HH:mm') }}</p>
+          <div class="actions">
+            <ion-badge [color]="getStats(user.status).color">{{ getStats(user.status).name }}</ion-badge>
+            <ion-button size="small" fill="outline">
+              <ion-icon slot="icon-only" name="call"></ion-icon>
+            </ion-button>
+            <ion-button size="small" fill="outline">
+              <ion-icon slot="icon-only" name="mail"></ion-icon>
+            </ion-button>
+          </div>
         </ion-label>
       </ion-item>
   

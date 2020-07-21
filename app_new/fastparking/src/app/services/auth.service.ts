@@ -20,12 +20,12 @@ export class AuthServiceProvider {
   public setUserLogged = new Subject<User>();
   get tokenAuth () {
 
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
 
   }
 
   set tokenAuth(token: string) {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
 
   constructor(
@@ -48,6 +48,15 @@ export class AuthServiceProvider {
 
     return this.http.get<{data: User; success: boolean}>(`${environment.baseApi}/me`);
 
+  }
+
+  callUserLogged() {
+    this.getMeProfile().subscribe(payloadUser => {
+
+      this.userLogged = payloadUser.data;
+      this.setUserLogged.next();
+
+    });
   }
 
   saveSessionUser(data: PayloadLogin) {

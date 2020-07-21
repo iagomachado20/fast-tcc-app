@@ -21,6 +21,7 @@ import { CounterVacancy, UserBusy } from 'src/app/models/vacancy.model';
 export class DashboardPage implements OnInit {
   sub: Subscription;
   user: User;
+  isLoading = true;
   vacancies: CounterVacancy = {
     vacanciesAvailables: 0,
     vacanciesBusy: 0
@@ -37,13 +38,15 @@ export class DashboardPage implements OnInit {
     private vancancyService: VacancyService
   ) {
 
+
+  }
+
+  ngOnInit() {
     this.sub = forkJoin([
       this.auth.getMeProfile(),
       this.vancancyService.getCounterVacancys(),
       this.vancancyService.getListVacanciesBusy()
     ]).subscribe((response: any) => {
-
-      console.log(response)
 
       this.user = response[0].data;
       this.vacancies = response[1];
@@ -51,16 +54,20 @@ export class DashboardPage implements OnInit {
 
       this.auth.setUserLogged.next(this.user);
 
+      this.isLoading = false;
+
     });
-
-
   }
 
-  ngOnInit() {
-    
-  }
+  doRefresh(event) {
 
-  doRefresh() {
+    this.isLoading = true;
+
+    this.ngOnInit();
+
+    setTimeout(() => {
+      event.target.complete();
+    });
 
   }
 
@@ -83,6 +90,12 @@ export class DashboardPage implements OnInit {
     });
 
     await modal.present();
+
+    modal.onDidDismiss().then(response => {
+
+      this.ngOnInit();
+
+    });
 
   }
 

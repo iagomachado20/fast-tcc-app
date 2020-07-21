@@ -7,27 +7,51 @@
       refreshingText="Atualizando...">
     </ion-refresher-content>
   </ion-refresher>
-  <div id="container" *ngIf="user">
-    <header class="heading">
-      <img [src]="user.foto" [ngClass]="{'gray': !user.ativo}" class="avatar" alt="">
-      <div class="text">
-        <h4 class="title">{{ user.nome }}</h4>
-        <p class="sub">{{ user.email }}</p>
-        <ion-item color="transparent" lines="none">
-          <ion-label position="stacked">{{ user.ativo ? 'Aberto' : 'Fechado' }}</ion-label>
-          <ion-toggle color="secondary" (ionChange)="changeStatus(user.ativo)" [(ngModel)]="user.ativo"></ion-toggle>
-        </ion-item>
+  <div id="container">
+    <div *ngIf="!isLoading" class="block">
+      <header class="heading">
+        <img [src]="user.foto" [ngClass]="{'gray': !user.ativo}" class="avatar" alt="">
+        <div class="text">
+          <h4 class="title">{{ user.nome }}</h4>
+          <p class="sub">{{ user.email }}</p>
+          <ion-item color="transparent" lines="none">
+            <ion-label position="stacked">{{ user.ativo ? 'Aberto' : 'Fechado' }}</ion-label>
+            <ion-toggle color="secondary" (ionChange)="changeStatus(user.ativo)" [(ngModel)]="user.ativo"></ion-toggle>
+          </ion-item>
+        </div>
+      </header>
+      <div class="container-cards">
+        <ion-card color="secondary">
+          <h1 class="title">{{ vacancies.vacanciesAvailables }}</h1>
+          <p>Vagas Disponíveis</p>
+        </ion-card>
+        <ion-card color="warning" (click)="openDialog()">
+          <h1 class="title">{{ vacancies.vacanciesBusy }}</h1>
+          <p>Vagas Ocupadas</p>
+        </ion-card>
       </div>
-    </header>
-    <div class="container-cards" (click)="openDialog()">
-      <ion-card color="secondary">
-        <h1 class="title">{{ vacancies.vacanciesAvailables }}</h1>
-        <p>Vagas Disponíveis</p>
-      </ion-card>
-      <ion-card color="warning">
-        <h1 class="title">{{ vacancies.vacanciesBusy }}</h1>
-        <p>Vagas Ocupadas</p>
-      </ion-card>
+    </div>
+    <div class="block" *ngIf="isLoading">
+      <header class="heading">
+        <ion-thumbnail slot="start">
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-thumbnail>
+        <div class="text">
+          <h3>
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 25%; height: 20px"></ion-skeleton-text>
+          </h3>
+        </div>
+      </header>
+      <div class="container-cards">
+        <ion-card>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-card>
+        <ion-card>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-card>
+      </div>
     </div>
   </div>
 </ion-content>

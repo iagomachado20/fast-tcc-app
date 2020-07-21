@@ -54,3 +54,14 @@ h2 {
 ion-label {
   white-space: normal !important;
 }
+
+ion-button:not(.button-close) {
+  ion-icon {
+    font-size: 15px;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}

@@ -1,3 +1,4 @@
+import { ErrorRequest } from './../../../models/errors.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Establishment } from 'src/app/models/user.model';
 import { UtilService } from 'src/app/services/util.service';
@@ -59,8 +60,6 @@ export class ModalCallPage implements OnInit {
     this.vacancyService.requestVacancy(dataRequestVacancy)
     .subscribe(response => {
 
-      console.log(response);
-
       this.close();
       this.util.hideLoading();
 
@@ -71,11 +70,11 @@ export class ModalCallPage implements OnInit {
         dataCheckout: this.dateCheckout
       });
 
-    }, error => {
+    }, (error: ErrorRequest) => {
 
       this.close();
       this.util.hideLoading();
-      this.util.showToast('Não foi possível solicitar sua vaga neste momento!');
+      this.util.showToast(error.error.message);
 
     });
 
