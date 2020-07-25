@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
-import { LogoComponent } from './logo/logo.component';
 import { CommonModule } from '@angular/common';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   declarations: [
-    LogoComponent
+    
   ],
   entryComponents: [
-    LogoComponent
+    
   ],
   exports: [
-    LogoComponent
+    
   ]
 })
 export class SharedComponentsModule {}

@@ -4,11 +4,12 @@
   </ion-button>
   <h2 class="title">
     {{ data.nome }}
-    <strong>{{ data.distance }} Km</strong> 
+    <strong>{{ data.distance }} Km</strong>
   </h2>
-  <div>
+  <div class="info">
     <ion-badge [color]="data.ativo ? 'success' : 'medium'">{{ data.ativo ? 'Aberto' : 'Fechado' }}</ion-badge>
     <ion-badge [color]="'primary'">{{ data.valorhora | currency}} / h</ion-badge>
+    <app-star-rating [rating]="data.rating"></app-star-rating> 
   </div>
   <address *ngIf="data.endereco && data.numero">
     <ion-icon name="location-outline"></ion-icon> {{ data.endereco }}, {{ data.numero }}

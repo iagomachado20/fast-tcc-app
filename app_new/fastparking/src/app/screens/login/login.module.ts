@@ -11,7 +11,6 @@ import { LoginRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { SharedComponentsModule } from 'src/app/components/shared.module';
-import { LogoComponent } from 'src/app/components/logo/logo.component';
 import { RegisterPage } from '../register/register.page';
 
 @NgModule({

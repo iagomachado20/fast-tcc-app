@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -16,10 +16,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptos.service';
 import { MainPageModule } from './screens/client/main/main.module';
 import { DashboardModule } from './screens/establishment/dashboard/dashboard.module';
-
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
+  entryComponents: [
+    
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -41,6 +43,9 @@ import { DashboardModule } from './screens/establishment/dashboard/dashboard.mod
       useClass: HttpInterceptorService,
       multi: true
     }
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
   ],
   bootstrap: [AppComponent]
 })

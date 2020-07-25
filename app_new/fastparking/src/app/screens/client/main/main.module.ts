@@ -13,6 +13,7 @@ import { MainRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
 import { SharedComponentsModule } from 'src/app/components/shared.module';
+import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.component';
 
 @NgModule({
   imports: [
@@ -21,13 +22,16 @@ import { SharedComponentsModule } from 'src/app/components/shared.module';
     ReactiveFormsModule,
     IonicModule,
     MainRoutingModule,
-    HttpClientModule,
-    SharedComponentsModule
+    HttpClientModule
   ],
   exports: [],
   declarations: [
     MainPage,
-    ModalCallPage
+    ModalCallPage,
+    StarRatingComponent
+  ],
+  entryComponents: [
+    StarRatingComponent
   ],
   providers: [
     Geolocation

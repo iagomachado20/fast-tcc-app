@@ -83,6 +83,8 @@ export class MainPage implements OnInit {
       this.auth.userLogged = dataUser.data;
       this.auth.setUserLogged.next(dataUser.data);
 
+      console.log(this.mapService.positionUser);
+
       this.mapService.createMarker(dataUser.data, {
         lat: this.mapService.positionUser.latitude,
         lng: this.mapService.positionUser.longitude,
@@ -90,6 +92,10 @@ export class MainPage implements OnInit {
 
     });
 
+  }
+
+  openMenu() {
+    this.util.submitEventMenu.next(true);
   }
 
   getAllEstablishments() {

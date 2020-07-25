@@ -45,12 +45,18 @@ ion-progress-bar {
     font-size: 12px;
     --border-radius: 20px;
     flex: 1;
+    padding-right: 0;
   }
   ion-list {
     padding: 0 10px;
     border-radius: 7px;
-    width: 95%;
+    width: 85vw;
     margin: -6px auto;
+    position: absolute;
+    top: 90%;
+    right: 0;
+    left: 0;
+    margin: auto;
     background: #ffffff;
   }
 }
@@ -81,6 +87,14 @@ ion-card {
     left: 0;
     z-index: 0;
     top: 0;
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    app-star-rating {
+      display: block;
+      margin: 0 10px;
+    }
   }
   &:after {
     content: '';
