@@ -1,3 +1,4 @@
+import { ErrorRequest } from './../../../models/errors.model';
 import { VacancyStatus } from './../../../models/vacancy.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { Establishment } from 'src/app/models/user.model';
@@ -98,6 +99,22 @@ export class ModalVacancies implements OnInit {
         this.util.showToast('Não foi possível atualizar o status desta vaga. Tente novamente!');
 
       });
+
+  }
+
+  cancel(userVacancy: UserBusy) {
+    
+    this.vacancyService.cancelVacancyClient(userVacancy, 'houve imprevisto')
+    .subscribe((response: SuccessRequest) => {
+
+      this.util.showToast(response.message);
+      this.close();
+
+    },  (error: ErrorRequest) => {
+
+      this.util.showToast(error.error.message);
+
+    });
 
   }
 

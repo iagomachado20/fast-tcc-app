@@ -3,7 +3,7 @@ import { Establishment } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { ModelRequstVacancy, VacancyStatus } from '../models/vacancy.model';
+import { ModelRequstVacancy, VacancyStatus, UserBusy } from '../models/vacancy.model';
 
 export interface VacancyScheduled {
   establishment: Establishment;
@@ -44,6 +44,16 @@ export class VacancyService {
     return this.http.get(`${environment.baseApi}/list-vacancies-busy`);
   }
 
+  cancelVacancyClient({_id}: UserBusy, observacao: string) {
+
+    const payload = {
+      id: _id,
+      observacao
+    };
+
+    return this.http.post(`${environment.baseApi}/canceled-vacancy`, payload);
+  }
+
   updateStatusVacancy(status: VacancyStatus, idVacancy) {
 
     const body = {
@@ -56,10 +66,6 @@ export class VacancyService {
 
   requestVacancy(requestData: ModelRequstVacancy) {
     return this.http.post(`${environment.baseApi}/request-vacancy`, requestData);
-  }
-
-  cancelVacancy() {
-    return this.http.get(`${environment.baseApi}/canceled-vacancy`);
   }
 
 }
