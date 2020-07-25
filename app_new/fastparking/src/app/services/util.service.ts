@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
+
+  public submitEventMenu = new Subject<boolean>();
 
   constructor(
     private loadingController: LoadingController,

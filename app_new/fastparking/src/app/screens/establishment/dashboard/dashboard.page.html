@@ -8,6 +8,9 @@
     </ion-refresher-content>
   </ion-refresher>
   <div id="container">
+    <ion-button class="menu-button" color="medium" size="large" (click)="openMenu()" fill="clear">
+      <ion-icon name="menu"></ion-icon> 
+    </ion-button>
     <div *ngIf="!isLoading" class="block">
       <header class="heading">
         <img [src]="user.foto" [ngClass]="{'gray': !user.ativo}" class="avatar" alt="">
@@ -29,6 +32,15 @@
           <h1 class="title">{{ vacancies.vacanciesBusy }}</h1>
           <p>Vagas Ocupadas</p>
         </ion-card>
+      </div>
+      <div class="container-chart">
+        <fusioncharts
+          height="250"
+          width="100%"
+          type="Column2d"
+          [dataSource]="dataSource"
+        >
+        </fusioncharts>
       </div>
     </div>
     <div class="block" *ngIf="isLoading">

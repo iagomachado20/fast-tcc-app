@@ -12,6 +12,14 @@ import { DashboardPage } from './dashboard.page';
 import { SharedComponentsModule } from 'src/app/components/shared.module';
 import { ModalVacancies } from '../modal-vacancies/modal-vacancies.page';
 
+import { FusionChartsModule } from 'angular-fusioncharts';
+
+import * as FusionCharts from 'fusioncharts';
+import * as charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
+FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
+
 @NgModule({
   imports: [
     CommonModule,
@@ -20,7 +28,8 @@ import { ModalVacancies } from '../modal-vacancies/modal-vacancies.page';
     IonicModule,
     DashboardRoutingModule,
     HttpClientModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    FusionChartsModule
   ],
   exports: [],
   declarations: [

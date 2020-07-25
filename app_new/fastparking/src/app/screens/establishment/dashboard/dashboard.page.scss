@@ -35,14 +35,26 @@ ion-card {
   }
 }
 
+.menu-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+}
+
+ion-toggle {
+  width: 50px;
+  height: 20px;
+}
+
 .heading {
   margin: 3.5% 0;
   display: flex;
-  padding: 5% 0;
+  padding: 5% 0 0;
   align-items: center;
   .avatar {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     border-radius: 100%;
     transition: all 0.3s ease;
@@ -68,11 +80,25 @@ ion-card {
   .sub {
     margin: 2px 0;
     opacity: 0.7;
+    font-size: 13px;
   }
 }
 
 ion-toggle {
   padding-left: 0;
+}
+
+.container-chart {
+  width: 100%;
+  margin: 25px 0;
+  border-radius: 5px;
+  box-shadow: -1px 1px 11px 1px #00000042;
+  border-radius: 8px;
+  overflow: hidden;
+  fusioncharts {
+    display: block;
+    width: 100%;
+  }
 }
 
 .container-cards {
@@ -82,7 +108,7 @@ ion-toggle {
   ion-card {
     margin: 0;
     color: #ffffff;
-    height: 180px;
+    height: 160px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,7 +132,7 @@ ion-toggle {
       font-weight: 500;
       opacity: 0.85;
       line-height: 1.2;
-      font-size: 17px;
+      font-size: 14px;
     }
   }
 }

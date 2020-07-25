@@ -1,5 +1,6 @@
+import { dataSource } from './data.chart';
 import { ErrorPayload } from './../../../models/errors.model';
-import { Platform, ModalController } from '@ionic/angular';
+import { Platform, ModalController, MenuController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthServiceProvider } from 'src/app/services/auth.service';
@@ -29,6 +30,8 @@ export class DashboardPage implements OnInit {
 
   listClientesBusy: UserBusy[] = [];
 
+  dataSource: object;
+
   constructor(
     private util: UtilService,
     private auth: AuthServiceProvider,
@@ -37,8 +40,6 @@ export class DashboardPage implements OnInit {
     private modal: ModalController,
     private vancancyService: VacancyService
   ) {
-
-
   }
 
   ngOnInit() {
@@ -57,6 +58,9 @@ export class DashboardPage implements OnInit {
       this.isLoading = false;
 
     });
+
+    this.dataSource = dataSource;
+
   }
 
   doRefresh(event) {
@@ -112,6 +116,11 @@ export class DashboardPage implements OnInit {
 
     });
 
+  }
+
+
+  openMenu() {
+    this.util.submitEventMenu.next(true);
   }
 
   ionViewDidLeave() {
