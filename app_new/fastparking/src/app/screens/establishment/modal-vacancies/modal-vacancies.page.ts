@@ -64,7 +64,7 @@ export class ModalVacancies implements OnInit {
 
   }
 
-  acceptAction(vacancy: UserBusy) {
+  acceptAction(vacancy: UserBusy, sliding) {
 
     const payloadAction = {
       vacancyId: vacancy._id,
@@ -91,6 +91,9 @@ export class ModalVacancies implements OnInit {
           if (!this.list.length) {
             this.close();
           }
+
+          sliding.close();
+
         }
 
 
@@ -102,7 +105,7 @@ export class ModalVacancies implements OnInit {
 
   }
 
-  cancel(userVacancy: UserBusy) {
+  cancel(userVacancy: UserBusy, sliding) {
     
     this.vacancyService.cancelVacancyClient(userVacancy, 'houve imprevisto')
     .subscribe((response: SuccessRequest) => {
@@ -113,6 +116,7 @@ export class ModalVacancies implements OnInit {
     },  (error: ErrorRequest) => {
 
       this.util.showToast(error.error.message);
+      sliding.close();
 
     });
 

@@ -82,11 +82,17 @@ export class MainPage implements OnInit {
 
       this.auth.userLogged = dataUser.data;
       this.auth.setUserLogged.next(dataUser.data);
-      
-      this.mapService.createMarker(dataUser.data, {
-        lat: this.mapService.positionUser.latitude,
-        lng: this.mapService.positionUser.longitude,
-      }, true);
+
+      this.mapService.getPositionUser().then(position => {
+
+        const { latitude, longitude } = position.coords;
+
+        this.mapService.createMarker(dataUser.data, {
+          lat: latitude,
+          lng: longitude,
+        }, true);
+
+      });
 
     });
 

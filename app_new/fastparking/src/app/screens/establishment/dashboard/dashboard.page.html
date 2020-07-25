@@ -1,3 +1,6 @@
+
+<header-top></header-top>
+
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
@@ -8,18 +11,16 @@
     </ion-refresher-content>
   </ion-refresher>
   <div id="container">
-    <ion-button class="menu-button" color="medium" size="large" (click)="openMenu()" fill="clear">
-      <ion-icon name="menu"></ion-icon> 
-    </ion-button>
+    
     <div *ngIf="!isLoading" class="block">
       <header class="heading">
         <img [src]="user.foto" [ngClass]="{'gray': !user.ativo}" class="avatar" alt="">
         <div class="text">
+          <app-star-rating [rating]="user.rating"></app-star-rating>
           <h4 class="title">{{ user.nome }}</h4>
-          <p class="sub">{{ user.email }}</p>
           <ion-item color="transparent" lines="none">
             <ion-label position="stacked">{{ user.ativo ? 'Aberto' : 'Fechado' }}</ion-label>
-            <ion-toggle color="secondary" (ionChange)="changeStatus(user.ativo)" [(ngModel)]="user.ativo"></ion-toggle>
+            <ion-toggle color="primary" (ionChange)="changeStatus(user.ativo)" [(ngModel)]="user.ativo"></ion-toggle>
           </ion-item>
         </div>
       </header>

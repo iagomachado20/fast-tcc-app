@@ -1,0 +1,45 @@
+
+<ion-content>
+  <header-top></header-top>
+  <div id="container" *ngIf="user">
+    <ion-list *ngIf="user.perfil === typeUser.Client">
+      <ion-list-header>
+        Histórico
+      </ion-list-header>
+
+      <ion-item *ngFor="let item of dataHistory">
+        <ion-avatar slot="start">
+          <img [src]="item.establishment.foto">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ item.establishment.nome }}</h2>
+          <h3>{{ item.dataSolicitacao | date: 'dd/MM/yyyy HH:mm' }}</h3>
+          <ion-badge>{{ item.valor | currency: 'R$' }}</ion-badge>
+          <ion-badge *ngIf="item.status === statusVacancy.Canceled" color="danger">Cancelado</ion-badge>
+          <p *ngIf="item.observacao !== ''">
+            <ion-icon ios="ios-alert" name="warning"></ion-icon>
+            {{ item.observacao }}
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="user.perfil === typeUser.Establishment">
+      <ion-list-header>
+        Histórico
+      </ion-list-header>
+
+      <ion-item *ngFor="let item of dataHistory">
+        <ion-avatar slot="start">
+          <img [src]="item.client.foto">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ item.client.nome }}</h2>
+          <h3>{{ item.dataSolicitacao | date: 'dd/MM/yyyy HH:mm' }}</h3>
+          <ion-badge>{{ item.valor | currency: 'R$' }}</ion-badge>
+          <ion-badge *ngIf="item.status === statusVacancy.Canceled" color="danger">Cancelado</ion-badge>
+          <p *ngIf="item.observacao !== ''">{{ item.observacao }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

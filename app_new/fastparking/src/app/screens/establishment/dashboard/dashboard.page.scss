@@ -9,7 +9,7 @@
   color: black;
   overflow-y: auto;
   width: 100vw;
-  padding: 5%;
+  padding: 10% 5%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -35,15 +35,10 @@ ion-card {
   }
 }
 
-.menu-button {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 3;
-}
 
 ion-toggle {
-  width: 50px;
+  width: 35px;
+  padding-left: 0;
   height: 20px;
 }
 
@@ -53,8 +48,8 @@ ion-toggle {
   padding: 5% 0 0;
   align-items: center;
   .avatar {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
     border-radius: 100%;
     transition: all 0.3s ease;
@@ -76,6 +71,7 @@ ion-toggle {
   .title {
     font-weight: 900;
     margin-bottom: 0;
+    margin-top: 0;
   }
   .sub {
     margin: 2px 0;
@@ -84,9 +80,6 @@ ion-toggle {
   }
 }
 
-ion-toggle {
-  padding-left: 0;
-}
 
 .container-chart {
   width: 100%;

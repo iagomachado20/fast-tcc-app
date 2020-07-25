@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Histórico',
-      url: '/history',
+      url: '/historic',
       icon: 'archive'
     }
   ];
@@ -43,10 +43,10 @@ export class AppComponent implements OnInit {
     public menu: MenuController,
     public util: UtilService
   ) {
+
     this.initializeApp();
 
     this.util.submitEventMenu.subscribe(eventMenu => {
-
       this.menu.open('menu');
 
     });
@@ -62,11 +62,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    this.sub = this.auth.setUserLogged
-    .subscribe((user: User) => {
-      this.user = user;
+    this.sub = this.auth.getMeProfile()
+    .subscribe((user) => {
 
-      if (user.perfil === TypeUser.Client) {
+      this.user = user.data;
+      this.auth.userLogged = this.user;
+      this.auth.setUserLogged.next(user.data);
+
+      if (this.user.perfil === TypeUser.Client) {
 
         this.appPages.push({
           title: 'Favoritos',

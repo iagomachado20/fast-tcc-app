@@ -25,6 +25,11 @@ ion-menu-button {
 
 
 .heading {
+  text-align: center;
+  logo-brand {
+    display: block;
+    margin: 0 auto;
+  }
   > h1 {
     margin: 2px 0 15px;
   }

@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment.prod';
-import { Establishment } from './../models/user.model';
+import { Establishment, TypeUser } from './../models/user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
@@ -66,6 +66,10 @@ export class VacancyService {
 
   requestVacancy(requestData: ModelRequstVacancy) {
     return this.http.post(`${environment.baseApi}/request-vacancy`, requestData);
+  }
+
+  getHistory(userType: string) {
+    return this.http.get(`${environment.baseApi}/historic/${userType}`);
   }
 
 }

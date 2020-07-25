@@ -17,6 +17,7 @@ import { HttpInterceptorService } from './interceptors/http-interceptos.service'
 import { MainPageModule } from './screens/client/main/main.module';
 import { DashboardModule } from './screens/establishment/dashboard/dashboard.module';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { HistoricPageModule } from './screens/historic/historic.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
@@ -29,6 +30,7 @@ import { StarRatingComponent } from './components/star-rating/star-rating.compon
     ReactiveFormsModule,
     LoginPageModule,
     MainPageModule,
+    HistoricPageModule,
     CommonModule,
     DashboardModule,
     FormsModule,

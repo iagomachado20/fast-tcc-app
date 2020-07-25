@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./screens/establishment/dashboard/dashboard.module').then( m => m.DashboardModule)
+  },
+  {
+    path: 'historic',
+    loadChildren: () => import('./screens/historic/historic.module').then( m => m.HistoricPageModule)
   }
 ];
 
