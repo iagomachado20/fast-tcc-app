@@ -4,11 +4,12 @@
 
   <div id="container">
     <div class="map" id="map_canvas"></div>
-    <header class="header-search" *ngIf="!vacancyScheduled">
+    <header class="header-search">
       <ion-button class="menu-button" (click)="openMenu()">
         <ion-icon name="menu"></ion-icon> 
       </ion-button>
       <ion-searchbar 
+        *ngIf="!vacancyScheduled"
         debounce="300" 
         mode="md"
         color="light"
