@@ -5,43 +5,33 @@
   <div id="container">
     <div class="map" id="map_canvas"></div>
     <header class="header-search">
-      <ion-button class="menu-button" (click)="openMenu()">
-        <ion-icon name="menu"></ion-icon> 
-      </ion-button>
+      <menu-button></menu-button>
       <ion-searchbar 
         *ngIf="!vacancyScheduled"
         debounce="300" 
         mode="md"
         color="light"
         animated
-        [(ngModel)]="searchText"
-        (ionChange)="search($event)" 
+        [(ngModel)]="searchText" 
         placeholder="Buscar Locais"></ion-searchbar>
-      <ion-list *ngIf="filteredItems.length > 0 && isFiltered">
-        <ion-item *ngFor="let establishment of filteredItems" (click)="selectEstablishment(establishment)">
+      <ion-list *ngIf="searchText">
+        <ion-item *ngFor="let establishment of establishments | filterList: searchText">
           <ion-label>{{ establishment.nome }}</ion-label>
         </ion-item>
       </ion-list>
     </header>
     <div class="carrousel-box" *ngIf="!isLoading && !vacancyScheduled">
-      <ion-scroll scrollX="true" style="white-space: nowrap; height: 250px; display: flex">
-        <ion-card button="true" *ngFor="let establishment of establishments" (click)="selectEstablishment(establishment)">
-          <img [src]="establishment.foto" class="background">
-          <ion-card-content>
-            <div class="info">
-              <ion-badge>{{ establishment.valorhora | currency: 'R$' }}/ h</ion-badge>
-              <app-star-rating [rating]="establishment.rating"></app-star-rating>
-            </div>
-            <ion-card-title>{{ establishment.nome }}</ion-card-title>
-            <ion-card-subtitle *ngIf="establishment.distance">
-              <ion-icon name="location-outline"></ion-icon> {{ establishment.distance }} KM
-            </ion-card-subtitle>
-          </ion-card-content>
-        </ion-card>
+      <ion-scroll scrollX="true">
+        <card-establishment 
+          *ngFor="let establishment of establishments" 
+          [data]="establishment">
+        </card-establishment>
       </ion-scroll>
     </div>
   </div>
-  <div class="container-scheduled" *ngIf="vacancyScheduled" [ngClass]="{'open': vacancyScheduled}">
+  <div class="container-scheduled" 
+    *ngIf="vacancyScheduled" 
+    [ngClass]="{'open': vacancyScheduled}">
     <ion-progress-bar type="indeterminate"></ion-progress-bar>
     <h4 class="title">Você tem uma vaga agendada!</h4>
     <div class="content">

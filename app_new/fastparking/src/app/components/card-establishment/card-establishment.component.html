@@ -1,0 +1,13 @@
+<ion-card button="true" (click)="openDetail()">
+  <img [src]="data.foto" class="background">
+  <ion-card-content>
+    <div class="info">
+      <ion-badge>{{ data.valorhora | currency: 'R$' }}/ h</ion-badge>
+      <app-star-rating [rating]="data.rating"></app-star-rating>
+    </div>
+    <ion-card-title>{{ data.nome }}</ion-card-title>
+    <ion-card-subtitle *ngIf="data.distance">
+      <ion-icon name="location-outline"></ion-icon> {{ data.distance }} KM
+    </ion-card-subtitle>
+  </ion-card-content>
+</ion-card>

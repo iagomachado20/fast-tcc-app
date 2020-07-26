@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./menu-button.component.scss'],
 })
 export class MenuButtonComponent {
+
+  @Input() type = '';
 
   constructor(private util: UtilService) {}
 

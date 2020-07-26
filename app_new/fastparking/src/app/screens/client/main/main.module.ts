@@ -14,6 +14,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { MainPage } from './main.page';
 import { SharedComponentsModule } from 'src/app/components/shared.module';
 import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.component';
+import { FilterList } from 'src/app/pipes/filter.list.pipe';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { StarRatingComponent } from 'src/app/components/star-rating/star-rating.
     // StarRatingComponent
   ],
   providers: [
-    Geolocation
+    Geolocation,
+    FilterList
   ]
 })
 export class MainPageModule {}

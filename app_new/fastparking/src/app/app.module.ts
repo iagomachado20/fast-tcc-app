@@ -18,6 +18,7 @@ import { MainPageModule } from './screens/client/main/main.module';
 import { DashboardModule } from './screens/establishment/dashboard/dashboard.module';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { HistoricPageModule } from './screens/historic/historic.module';
+import { FilterList } from './pipes/filter.list.pipe';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
@@ -44,7 +45,8 @@ import { HistoricPageModule } from './screens/historic/historic.module';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true
-    }
+    },
+    FilterList
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

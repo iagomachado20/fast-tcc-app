@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { VacancyScheduled } from './../../../services/vacancy.service';
-import { Platform, ModalController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 import { Establishment, User } from './../../../models/user.model';
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
@@ -20,8 +20,6 @@ export class MainPage implements OnInit {
   sub: Subscription;
   isLoading = true;
   establishments: Establishment[] = [];
-  filteredItems: Establishment[] = [];
-  isFiltered = false;
   vacancyScheduled: VacancyScheduled;
 
   constructor(
@@ -29,45 +27,16 @@ export class MainPage implements OnInit {
     private auth: AuthServiceProvider,
     private establishmentService: EstablishmentService,
     private platform: Platform,
-    private modal: ModalController,
     private vancancyService: VacancyService,
     private mapService: MapService
   ) {
 
-
-    this.sub = this.vancancyService.dispatchVacancyConfirmed
-    .subscribe((dataVacancy: VacancyScheduled) => {
-
-      this.mapService.markerDistancePointsSelected(dataVacancy.establishment, this.mapService.positionUser);
-      this.vacancyScheduled = dataVacancy;
-
-    });
 
   }
 
   ionViewDidLeave() {
     this.sub.unsubscribe();
   }
-
-  assignCopy(){
-    this.filteredItems = Object.assign([], this.establishments);
-  }
-
-  search(event) {
-
-    const { value } = event.detail;
-
-    if  (!value){
-      this.assignCopy();
-    } // when nothing has typed
-    this.filteredItems = Object.assign([], this.establishments).filter(
-      item => item.nome.toLowerCase().indexOf(value.toLowerCase()) > -1
-    );
-
-    this.isFiltered = this.filteredItems.length > 0;
-
-  }
-
 
   changeStateLoading() {
 
@@ -98,16 +67,11 @@ export class MainPage implements OnInit {
 
   }
 
-  openMenu() {
-    this.util.submitEventMenu.next(true);
-  }
-
   getAllEstablishments() {
     this.establishmentService.getItems()
     .subscribe((establishments: { success: boolean, data: Establishment[] }) => {
 
       this.establishments = establishments.data;
-      this.assignCopy();
 
       this.establishments = this.mapService.populateMarkersDistance(this.establishments);
       this.changeStateLoading();
@@ -160,32 +124,20 @@ export class MainPage implements OnInit {
     await this.platform.ready();
 
     await this.mapService.createInstanceMap();
-
+    
     await this.getProfileUser();
 
     await this.getAllEstablishments();
 
     await this.getValidateVancacyIsBusy();
 
-  }
+    this.sub = this.vancancyService.dispatchVacancyConfirmed
+    .subscribe((dataVacancy: VacancyScheduled) => {
 
-  async selectEstablishment(establishment: Establishment) {
+      this.mapService.markerDistancePointsSelected(dataVacancy.establishment, this.mapService.positionUser);
+      this.vacancyScheduled = dataVacancy;
 
-    this.isFiltered = false;
-
-    const modal = await this.modal.create({
-      component: ModalCallPage,
-      cssClass: 'modal-background',
-      swipeToClose: true,
-      backdropDismiss: true,
-      animated: true,
-      showBackdrop: true,
-      componentProps: {
-        data: establishment
-      }
     });
-
-    await modal.present();
 
   }
 
