@@ -1,3 +1,4 @@
+import { environment } from './../environments/environment';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -16,9 +17,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './interceptors/http-interceptos.service';
 import { MainPageModule } from './screens/client/main/main.module';
 import { DashboardModule } from './screens/establishment/dashboard/dashboard.module';
-import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { HistoricPageModule } from './screens/historic/historic.module';
 import { FilterList } from './pipes/filter.list.pipe';
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const configSocket: SocketIoConfig = { url: `${environment.socketHost}`, options: {} };
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [
@@ -35,7 +40,8 @@ import { FilterList } from './pipes/filter.list.pipe';
     CommonModule,
     DashboardModule,
     FormsModule,
-    SharedComponentsModule
+    SharedComponentsModule,
+    SocketIoModule.forRoot(configSocket)
   ],
   providers: [
     StatusBar,

@@ -15,14 +15,17 @@
         [(ngModel)]="searchText" 
         placeholder="Buscar Locais"></ion-searchbar>
       <ion-list *ngIf="searchText">
-        <ion-item *ngFor="let establishment of establishments | filterList: searchText">
+        <ion-item
+          *ngFor="let establishment of establishments | filterList: searchText">
           <ion-label>{{ establishment.nome }}</ion-label>
         </ion-item>
       </ion-list>
     </header>
     <div class="carrousel-box" *ngIf="!isLoading && !vacancyScheduled">
       <ion-scroll scrollX="true">
-        <card-establishment 
+        <card-establishment
+          #cards
+          (clickedCard)="openDetailCard($event)" 
           *ngFor="let establishment of establishments" 
           [data]="establishment">
         </card-establishment>

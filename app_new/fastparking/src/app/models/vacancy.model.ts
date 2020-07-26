@@ -27,6 +27,6 @@ export interface UserBusy {
   establishment: string;
   observacao: string;
   status: number;
-  valor: 40;
+  valor: number;
   _id: string;
 }

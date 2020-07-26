@@ -129,3 +129,64 @@ ion-toggle {
     }
   }
 }
+
+.card-accept {
+  padding: 25px;
+  position: fixed;
+  z-index: 3;
+  background: #ffffff;
+  bottom: 0;
+  width: 100vw;
+  box-shadow: -1px -1px 7px #00000040;
+  text-align: center;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+  &.active {
+    transform: translateY(0);
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    justify-content: center;
+  }
+  .avatar {
+    width: 60px;
+    height: 60px;
+    border: 3px solid var(--ion-color-primary);
+    border-radius: 100%;
+  }
+  .heading {
+    display: flex;
+    align-items: center;
+    .info {
+      text-align: left;
+      padding: 0 10px;
+    }
+  }
+  h4 {
+    font-weight: 600;
+    margin-top: 0;
+  }
+  .dates {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid rgb(231, 231, 231);
+    font-size: 14px;
+    color: #2e2e2e;
+    border-bottom: 1px solid rgb(231, 231, 231);
+  }
+}
+
+.heading {
+  h5 {
+    margin: 0;
+  }
+  p {
+    margin: 5px 0;
+    font-size: 13px;
+    opacity: 0.9;
+    line-height: 1.2;
+  }
+}

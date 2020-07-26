@@ -28,8 +28,6 @@ export class HistoricPage implements OnInit {
 
   requestHistory() {
 
-    
-
     const { perfil } = this.auth.userLogged;
 
     this.vacancyService.getHistory(TypeUser[perfil])
@@ -51,10 +49,21 @@ export class HistoricPage implements OnInit {
 
     this.util.showLoading();
 
+    setTimeout(() => {
+      
+      if (this.auth.userLogged) {
+        this.user = this.auth.userLogged;
+        this.requestHistory();
+      }
+
+    }, 2000);
+
+    
+
     this.auth.setUserLogged.subscribe(user => {
       this.user = user;
-      this.requestHistory();
     });
+
 
   }
 

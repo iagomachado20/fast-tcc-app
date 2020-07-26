@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Establishment} from 'src/app/models/user.model';
 import { ModalCallPage } from 'src/app/screens/client/modal-call/modal-call.page';
 import { ModalController } from '@ionic/angular';
+import { MapService } from 'src/app/services/map.service';
 
 @Component({
   selector: 'card-establishment',
@@ -11,10 +12,11 @@ import { ModalController } from '@ionic/angular';
 export class CardEstablishmentComponent implements OnInit {
 
   @Input() data: Establishment;
-  @Input() componentDetail = ModalCallPage;
+  @Output() clickedCard = new EventEmitter<HTMLIonModalElement>();
 
   constructor(
-    private modal: ModalController
+    private modal: ModalController,
+    private mapService: MapService
   ) { }
 
   ngOnInit() {}
@@ -33,7 +35,7 @@ export class CardEstablishmentComponent implements OnInit {
       }
     });
 
-    await modal.present();
+    this.clickedCard.emit(modal);
 
   }
 

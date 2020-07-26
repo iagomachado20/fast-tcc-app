@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { Establishment, User } from './../models/user.model';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Injectable } from '@angular/core';
@@ -6,14 +7,9 @@ import { HttpClient } from '@angular/common/http';
 import {
   GoogleMaps,
   GoogleMap,
-  GoogleMapsEvent,
   GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker,
   Environment,
   MarkerIcon,
-  PolygonOptions,
   PolylineOptions
 } from '@ionic-native/google-maps';
 import { ModelGeo } from '../models/geolocatio.model';
@@ -56,12 +52,11 @@ export class MapService {
           tilt: 10
         },
         controls: {
-          zoom: false
+          zoom: false,
         }
       };
   
       this.map = GoogleMaps.create('map_canvas', mapOptions);
-
 
     });
 
@@ -113,12 +108,14 @@ export class MapService {
       }
     };
 
-    this.map.addMarkerSync({
-      title: user.nome,
-      icon: iconMe,
-      animation: 'DROP',
-      position: location
-    });
+    if (this.map)  {
+      this.map.addMarkerSync({
+        title: user.nome,
+        icon: iconMe,
+        animation: 'DROP',
+        position: location
+      });
+    }
 
   }
 

@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   public appPages = [
     {
       title: 'Home',
-      url: '/main',
+      url: '/',
       icon: 'home'
     },
     {

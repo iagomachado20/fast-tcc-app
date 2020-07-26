@@ -5,6 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ModalController } from '@ionic/angular';
 import { VacancyService } from 'src/app/services/vacancy.service';
 import { ModelRequstVacancy, VacancyStatus } from 'src/app/models/vacancy.model';
+import { AuthServiceProvider } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-modal-call',
@@ -42,7 +43,7 @@ export class ModalCallPage implements OnInit {
     this.valuePayment = hoursPrice * valorhora;
 
   }
-
+  
   requestVacancy() {
 
     this.util.showToast('Solicitando Vaga...');
@@ -63,12 +64,14 @@ export class ModalCallPage implements OnInit {
       this.close();
       this.util.hideLoading();
 
-      this.vacancyService.dispatchVacancyConfirmed.next({
+      const payload = {
         establishment: this.data,
         valuePayment: this.valuePayment,
         dataCheckIn: this.dateCheckIn,
         dataCheckout: this.dateCheckout
-      });
+      };
+
+      this.vacancyService.dispatchVacancyConfirmed.next(payload);
 
     }, (error: ErrorRequest) => {
 

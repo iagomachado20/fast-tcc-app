@@ -67,4 +67,38 @@
       </div>
     </div>
   </div>
+  <div class="card-accept" [ngClass]="{'active': userRequesting}">
+    <div *ngIf="userRequesting">
+      <h4>Uma vaga foi solicitada!</h4>
+      <header class="heading">
+        <img [src]="userRequesting.client.foto" class="avatar">
+        <div class="info">
+          <h5>{{ userRequesting.client.nome }}</h5>
+          <p>
+            <ion-icon name="car"></ion-icon> {{ userRequesting.client.marcaVeiculo }}
+            ({{ userRequesting.client.placaVeiculo }}) 
+          </p>
+          <ion-badge color="success">{{ userRequesting.valor | currency: 'R$' }}</ion-badge>
+        </div>
+      </header>
+    
+      <div class="dates">
+        <div class="card">
+          <ion-icon name="calendar"></ion-icon>
+          <label>Check-In</label>
+          {{ userRequesting.checkIn | date: 'dd/mm/yyyy HH:mm'}}
+        </div>
+        <div class="card">
+          <ion-icon name="calendar"></ion-icon>
+          <label>Check-Out</label>
+          {{ userRequesting.checkOut | date: 'dd/mm/yyyy HH:mm'}}
+        </div>
+      </div>
+
+      <footer>
+        <ion-button color="secondary" size="small" (click)="confirm(userRequesting)">Confirmar Vaga</ion-button>
+        <ion-button color="danger" size="small"  (click)="cancel(userRequesting)">Cancelar Vaga</ion-button>
+      </footer>
+    </div>
+  </div>
 </ion-content>

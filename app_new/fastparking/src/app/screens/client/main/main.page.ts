@@ -31,6 +31,13 @@ export class MainPage implements OnInit {
     private mapService: MapService
   ) {
 
+    this.sub = this.vancancyService.dispatchVacancyConfirmed
+    .subscribe((dataVacancy: VacancyScheduled) => {
+
+      this.mapService.markerDistancePointsSelected(dataVacancy.establishment, this.mapService.positionUser);
+      this.vacancyScheduled = dataVacancy;
+
+    });
 
   }
 
@@ -64,6 +71,7 @@ export class MainPage implements OnInit {
       });
 
     });
+    
 
   }
 
@@ -83,6 +91,7 @@ export class MainPage implements OnInit {
 
     });
   }
+
 
   getValidateVancacyIsBusy() {
 
@@ -124,20 +133,19 @@ export class MainPage implements OnInit {
     await this.platform.ready();
 
     await this.mapService.createInstanceMap();
-    
-    await this.getProfileUser();
 
-    await this.getAllEstablishments();
+    setTimeout(async () => {
+      await this.getProfileUser();
+      await this.getAllEstablishments();
+    });
 
     await this.getValidateVancacyIsBusy();
 
-    this.sub = this.vancancyService.dispatchVacancyConfirmed
-    .subscribe((dataVacancy: VacancyScheduled) => {
+  }
 
-      this.mapService.markerDistancePointsSelected(dataVacancy.establishment, this.mapService.positionUser);
-      this.vacancyScheduled = dataVacancy;
+  openDetailCard(modal: HTMLIonModalElement) {
 
-    });
+    modal.present();
 
   }
 

@@ -9,7 +9,8 @@
 
 export const environment = {
   production: false,
-  baseApi: 'localhost:3001/'
+  baseApi: 'localhost:3001/',
+  socketHost: 'http://localhost:4444'
 };
 
 
