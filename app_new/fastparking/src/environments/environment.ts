@@ -9,8 +9,8 @@
 
 export const environment = {
   production: false,
-  baseApi: 'localhost:3001/',
-  socketHost: 'http://localhost:4444'
+  baseApi: 'https://app-tcc.herokuapp.com',
+  socketHost: `https://app-tcc.herokuapp.com:4444`
 };
 
 

@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment.prod';
 import { Establishment, User } from './../models/user.model';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Injectable } from '@angular/core';
@@ -15,7 +14,7 @@ import {
 import { ModelGeo } from '../models/geolocatio.model';
 import { UtilService } from './util.service';
 
-
+declare var google;
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,8 @@ export class MapService {
 
   constructor(
     private geolocation: Geolocation
-  ) {}
+  ) {
+}
 
   createInstanceMap() {
 
@@ -48,7 +48,7 @@ export class MapService {
             lat: latitude,
             lng: longitude
           },
-          zoom: 14,
+          zoom: 13,
           tilt: 10
         },
         controls: {
@@ -91,10 +91,12 @@ export class MapService {
 
     this.map.addPolyline(polylineOptions).then();
 
-    const zoomDefined = parseInt(establishment.distance, 0) < 2 ? 15 : 12; 
-
     this.map.getCameraTarget();
-    this.map.setCameraZoom(zoomDefined);
+    if (parseInt(establishment.distance, 0) < 6) {
+      this.map.animateCameraZoomIn();
+    } else {
+      this.map.animateCameraZoomOut();
+    } 
 
   }
 
@@ -103,8 +105,8 @@ export class MapService {
     const iconMe: MarkerIcon = {
       url: isClient ? user.foto : 'assets/icon.png',
       size: {
-        width: 35,
-        height: 35
+        width: 28,
+        height: 28
       }
     };
 
